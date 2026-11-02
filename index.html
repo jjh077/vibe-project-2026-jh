@@ -1,11 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>그루밍데이</title>
+    <meta name="description" content="그루밍데이 - 반려동물과 함께하는 따뜻한 일상">
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    
+    <header class="site-header">
+        <div class="site-header__inner">
+            <nav class="primary-navigation" aria-label="주요 메뉴">
+                <a href="#best-products">APPAREL</a>
+                <a href="#best-products">굿즈</a>
+                <a href="#best-products">커뮤니티</a>
+            </nav>
+
+            <a class="brand-logo" href="#" aria-label="그루밍데이 홈">그루밍데이</a>
+
+            <nav class="utility-navigation" aria-label="사용자 메뉴">
+                <button class="icon-button" type="button" aria-label="검색">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                        <path d="m16 16 4.2 4.2"></path>
+                    </svg>
+                </button>
+                <span class="utility-navigation__item">
+                    <button class="icon-button" type="button" aria-label="마이페이지">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="7.5" r="3.5"></circle>
+                            <path d="M4.5 20c.5-4 3.2-6 7.5-6s7 2 7.5 6"></path>
+                        </svg>
+                    </button>
+                    <span class="point-badge">1,000P</span>
+                </span>
+                <button class="icon-button utility-navigation__item" type="button" aria-label="장바구니, 0개">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 8h14l1.2 12H3.8L5 8Z"></path>
+                        <path d="M9 9V6a3 3 0 0 1 6 0v3"></path>
+                    </svg>
+                    <span class="cart-count" aria-hidden="true">0</span>
+                </button>
+                <button class="icon-button" type="button" aria-label="언어 선택">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M3.5 9h17M3.5 15h17M12 3c2.3 2.4 3.4 5.4 3.4 9s-1.1 6.6-3.4 9c-2.3-2.4-3.4-5.4-3.4-9S9.7 5.4 12 3Z"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" aria-label="메인 배너">
+            <div class="hero__image image-placeholder" role="img" aria-label="메인 배너 이미지 자리">
+                <span class="image-placeholder__label">메인 배너 이미지 영역</span>
+            </div>
+            <div class="hero-pagination" aria-hidden="true">
+                <span></span>
+                <span aria-current="true"></span>
+                <span></span>
+            </div>
+        </section>
+
+        <section class="best-products" id="best-products" aria-labelledby="best-products-title">
+            <h1 class="best-products__title" id="best-products-title">베스트 상품</h1>
+            <p class="best-products__description">가장 사랑받은 아이템들</p>
+            <div class="best-products__grid" aria-label="베스트 상품 이미지 자리">
+                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

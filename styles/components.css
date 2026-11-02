@@ -1,0 +1,32 @@
+.icon-button {
+  position: relative;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.icon-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
+}
+
+.image-placeholder {
+  display: grid;
+  place-items: center;
+  color: var(--color-placeholder-text);
+  background: var(--color-placeholder);
+}
+
+.image-placeholder__label {
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.04em;
+}
