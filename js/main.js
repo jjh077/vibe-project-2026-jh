@@ -281,50 +281,54 @@ updateSlide(0);
 startAutoplay();
 
 
-// --- 踰좎뒪???곹뭹 ?뱀뀡 ?명꽣?숈뀡 ---
 const bestProductsSection = document.getElementById("best-products");
-const productCards = document.querySelectorAll(".product-card");
+const productCards = [...document.querySelectorAll(".product-card")];
 const moreProductsBtn = document.getElementById("more-products-btn");
+const moreProductsLabel = moreProductsBtn?.querySelector(".more-button__label");
 
-if (bestProductsSection) {
-  // 紐⑤컮?? ?곹뭹 諛뺤뒪 ?대┃ ???ъ쭊 蹂寃?(?좉?)
-  productCards.forEach((card) => {
-    card.addEventListener("click", (event) => {
-      // ?≪뀡 踰꾪듉(醫뗭븘?? ?λ컮援щ땲) ?대┃ ???대?吏 ?좉? 諛⑹?
-      if (event.target.closest(".product-card__actions")) {
-        return;
-      }
-      // ?띿뒪??留곹겕 ?대┃ ??湲곕낯 ?숈옉
-      if (event.target.closest("a")) {
-        return;
-      }
-      // 泥?踰덉㎏ 諛뺤뒪???대?吏 ?ㅼ솑 ?놁쓬
-      if (card.dataset.noSwap === "true") {
-        return;
-      }
-
-      card.classList.toggle("is-toggled");
-    });
-  });
-
-  // 醫뗭븘??踰꾪듉 ?곹깭 ?좉?
-  bestProductsSection.querySelectorAll(".product-card__action-btn").forEach((btn) => {
-    btn.addEventListener("click", (event) => {
-      event.stopPropagation();
-      const label = btn.getAttribute("aria-label") || "";
-      if (label.includes("醫뗭븘??)) {
-        btn.classList.toggle("is-active");
-      }
-    });
-  });
-
-  // ?붾낫湲?踰꾪듉
-  if (moreProductsBtn) {
-    moreProductsBtn.addEventListener("click", () => {
-      const isExpanded = bestProductsSection.classList.toggle("is-expanded");
-      moreProductsBtn.innerHTML = isExpanded
-        ? '?묎린 <span class="more-button__arrow" aria-hidden="true">??/span>'
-        : '?붾낫湲?<span class="more-button__arrow" aria-hidden="true">??/span>';
-    });
-  }
+if (!bestProductsSection || !moreProductsBtn || !moreProductsLabel) {
+  throw new Error("베스트 상품 섹션을 찾을 수 없습니다.");
 }
+
+productCards.forEach((card) => {
+  const imageButton = card.querySelector(".product-card__thumb");
+
+  if (!imageButton) {
+    throw new Error("상품 사진 버튼을 찾을 수 없습니다.");
+  }
+
+  imageButton.setAttribute("aria-pressed", "false");
+
+  imageButton.addEventListener("click", () => {
+    if (!mobileViewport.matches || card.dataset.noSwap === "true") {
+      return;
+    }
+
+    const isToggled = card.classList.toggle("is-toggled");
+    imageButton.setAttribute("aria-pressed", String(isToggled));
+  });
+});
+
+bestProductsSection.querySelectorAll(".product-card__action-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    const isActive = button.classList.toggle("is-active");
+    const actionLabel = button.getAttribute("aria-label") || "";
+    const separatorIndex = actionLabel.indexOf(": ");
+    const productName = actionLabel.slice(separatorIndex + 2);
+    const isLikeButton = actionLabel.startsWith("좋아요");
+    const activeLabel = isLikeButton ? "좋아요 취소" : "장바구니에서 빼기";
+    const inactiveLabel = isLikeButton ? "좋아요" : "장바구니 담기";
+
+    button.setAttribute("aria-pressed", String(isActive));
+    button.setAttribute(
+      "aria-label",
+      `${isActive ? activeLabel : inactiveLabel}: ${productName}`,
+    );
+  });
+});
+
+moreProductsBtn.addEventListener("click", () => {
+  const isExpanded = bestProductsSection.classList.toggle("is-expanded");
+  moreProductsBtn.setAttribute("aria-expanded", String(isExpanded));
+  moreProductsLabel.textContent = isExpanded ? "접기" : "더보기";
+});
