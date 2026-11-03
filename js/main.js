@@ -1,4 +1,4 @@
-const hero = document.querySelector(".hero");
+﻿const hero = document.querySelector(".hero");
 const track = document.querySelector(".hero-track");
 const slides = [...document.querySelectorAll(".hero-slide")];
 const indicators = [...document.querySelectorAll(".hero-pagination__item")];
@@ -279,3 +279,52 @@ mobileViewport.addEventListener("change", (event) => {
 
 updateSlide(0);
 startAutoplay();
+
+
+// --- 踰좎뒪???곹뭹 ?뱀뀡 ?명꽣?숈뀡 ---
+const bestProductsSection = document.getElementById("best-products");
+const productCards = document.querySelectorAll(".product-card");
+const moreProductsBtn = document.getElementById("more-products-btn");
+
+if (bestProductsSection) {
+  // 紐⑤컮?? ?곹뭹 諛뺤뒪 ?대┃ ???ъ쭊 蹂寃?(?좉?)
+  productCards.forEach((card) => {
+    card.addEventListener("click", (event) => {
+      // ?≪뀡 踰꾪듉(醫뗭븘?? ?λ컮援щ땲) ?대┃ ???대?吏 ?좉? 諛⑹?
+      if (event.target.closest(".product-card__actions")) {
+        return;
+      }
+      // ?띿뒪??留곹겕 ?대┃ ??湲곕낯 ?숈옉
+      if (event.target.closest("a")) {
+        return;
+      }
+      // 泥?踰덉㎏ 諛뺤뒪???대?吏 ?ㅼ솑 ?놁쓬
+      if (card.dataset.noSwap === "true") {
+        return;
+      }
+
+      card.classList.toggle("is-toggled");
+    });
+  });
+
+  // 醫뗭븘??踰꾪듉 ?곹깭 ?좉?
+  bestProductsSection.querySelectorAll(".product-card__action-btn").forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const label = btn.getAttribute("aria-label") || "";
+      if (label.includes("醫뗭븘??)) {
+        btn.classList.toggle("is-active");
+      }
+    });
+  });
+
+  // ?붾낫湲?踰꾪듉
+  if (moreProductsBtn) {
+    moreProductsBtn.addEventListener("click", () => {
+      const isExpanded = bestProductsSection.classList.toggle("is-expanded");
+      moreProductsBtn.innerHTML = isExpanded
+        ? '?묎린 <span class="more-button__arrow" aria-hidden="true">??/span>'
+        : '?붾낫湲?<span class="more-button__arrow" aria-hidden="true">??/span>';
+    });
+  }
+}
