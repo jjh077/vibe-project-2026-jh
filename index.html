@@ -5,77 +5,189 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>그루밍데이</title>
     <meta name="description" content="그루밍데이 - 반려동물과 함께하는 따뜻한 일상">
-    <link rel="stylesheet" href="styles/variables.css">
-    <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/components.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="site-header__inner">
-            <nav class="primary-navigation" aria-label="주요 메뉴">
-                <a href="#best-products">APPAREL</a>
-                <a href="#best-products">굿즈</a>
-                <a href="#best-products">커뮤니티</a>
-            </nav>
+    <header class="outer-box outer-box--header">
+        <div class="inner-box header__inner">
+            <div class="part-box header__desktop">
+                <nav class="part-box header__desktop-menu" aria-label="주요 메뉴">
+                    <a href="#best-products">APPAREL</a>
+                    <a href="#best-products">굿즈</a>
+                    <a href="#best-products">커뮤니티</a>
+                </nav>
 
-            <a class="brand-logo" href="#" aria-label="그루밍데이 홈">그루밍데이</a>
+                <a class="brand-logo" href="#" aria-label="그루밍데이 홈">그루밍데이</a>
 
-            <nav class="utility-navigation" aria-label="사용자 메뉴">
-                <button class="icon-button" type="button" aria-label="검색">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <circle cx="10.8" cy="10.8" r="6.8"></circle>
-                        <path d="m16 16 4.2 4.2"></path>
-                    </svg>
-                </button>
-                <span class="utility-navigation__item">
-                    <button class="icon-button" type="button" aria-label="마이페이지">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <circle cx="12" cy="7.5" r="3.5"></circle>
-                            <path d="M4.5 20c.5-4 3.2-6 7.5-6s7 2 7.5 6"></path>
-                        </svg>
+                <nav class="part-box header__desktop-utilities" aria-label="사용자 메뉴">
+                    <button class="icon-button" type="button" aria-label="검색">
+                        <img src="images/used/icon_search_b.svg" alt="">
                     </button>
-                    <span class="point-badge">1,000P</span>
-                </span>
-                <button class="icon-button utility-navigation__item" type="button" aria-label="장바구니, 0개">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M5 8h14l1.2 12H3.8L5 8Z"></path>
-                        <path d="M9 9V6a3 3 0 0 1 6 0v3"></path>
-                    </svg>
-                    <span class="cart-count" aria-hidden="true">0</span>
-                </button>
-                <button class="icon-button" type="button" aria-label="언어 선택">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <circle cx="12" cy="12" r="9"></circle>
-                        <path d="M3.5 9h17M3.5 15h17M12 3c2.3 2.4 3.4 5.4 3.4 9s-1.1 6.6-3.4 9c-2.3-2.4-3.4-5.4-3.4-9S9.7 5.4 12 3Z"></path>
-                    </svg>
-                </button>
-            </nav>
+                    <button class="icon-button" type="button" aria-label="마이페이지">
+                        <img src="images/used/icon_header_mypage_b_512.svg" alt="">
+                    </button>
+                    <button class="icon-button cart-button" type="button" aria-label="장바구니, 0개">
+                        <img src="images/used/icon_header_cart_b_512.svg" alt="">
+                        <span class="cart-count" aria-hidden="true">0</span>
+                        <span class="point-badge">+1,000P</span>
+                    </button>
+                    <button class="icon-button" type="button" aria-label="언어 선택">
+                        <img src="images/used/icon_header_global_b_512.svg" alt="">
+                    </button>
+                </nav>
+            </div>
+
+            <div class="header__mobile">
+                <div class="part-box header__mobile-top">
+                    <div class="part-box header__mobile-leading">
+                        <button class="icon-button menu-toggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobile-menu">
+                            <svg class="menu-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <path class="menu-toggle__line menu-toggle__line--top" d="M2 4h20"></path>
+                                <path class="menu-toggle__line menu-toggle__line--middle" d="M2 12h20"></path>
+                                <path class="menu-toggle__line menu-toggle__line--bottom" d="M2 20h20"></path>
+                            </svg>
+                        </button>
+                        <button class="icon-button" type="button" aria-label="마이페이지">
+                            <img src="images/used/icon_header_mypage_b_512.svg" alt="">
+                        </button>
+                    </div>
+                    <a class="brand-logo" href="#" aria-label="그루밍데이 홈">그루밍데이</a>
+                    <nav class="part-box header__mobile-utilities" aria-label="사용자 메뉴">
+                        <button class="icon-button" type="button" aria-label="검색">
+                            <img src="images/used/icon_search_b.svg" alt="">
+                        </button>
+                        <button class="icon-button cart-button" type="button" aria-label="장바구니, 0개">
+                            <img src="images/used/icon_header_cart_b_512.svg" alt="">
+                            <span class="cart-count" aria-hidden="true">0</span>
+                        </button>
+                    </nav>
+                </div>
+                <div class="part-box header__mobile-categories">
+                    <nav class="part-box header__mobile-menu" id="mobile-categories" aria-label="카테고리">
+                        <a href="#best-products">APPAREL</a>
+                        <a href="#best-products">굿즈</a>
+                        <a class="header__mobile-extra" href="#best-products" hidden>커뮤니티</a>
+                    </nav>
+                    <button class="icon-button category-toggle" type="button" aria-label="카테고리 더 보기" aria-expanded="false" aria-controls="mobile-categories">
+                        <span aria-hidden="true">+</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
     <main>
-        <section class="hero" aria-label="메인 배너">
-            <div class="hero__image image-placeholder" role="img" aria-label="메인 배너 이미지 자리">
-                <span class="image-placeholder__label">메인 배너 이미지 영역</span>
-            </div>
-            <div class="hero-pagination" aria-hidden="true">
-                <span></span>
-                <span aria-current="true"></span>
-                <span></span>
+        <section class="outer-box outer-box--bleed hero" aria-label="메인 배너" tabindex="0">
+            <div class="inner-box hero__inner">
+                <div class="hero-track" aria-live="off">
+                    <article class="hero-slide" aria-label="1 / 4" aria-hidden="false">
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="images/used/dayand-mob-3.jpg">
+                            <img class="hero-slide__image" src="images/used/dayand-dt-65.jpg" alt="단풍잎을 바라보는 두 마리 고양이" fetchpriority="high" draggable="false">
+                        </picture>
+                    </article>
+                    <article class="hero-slide" aria-label="2 / 4" aria-hidden="true" inert>
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="images/used/dayand-mob-51.jpg">
+                            <img class="hero-slide__image" src="images/used/dayand-dt-32.jpg" alt="단풍잎을 바라보는 고양이" draggable="false">
+                        </picture>
+                    </article>
+                    <article class="hero-slide" aria-label="3 / 4" aria-hidden="true" inert>
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="images/used/dayand-mob-41.jpg">
+                            <img class="hero-slide__image" src="images/used/dayand-dt-31.jpg" alt="단풍잎 사이로 보이는 고양이 앞발" draggable="false">
+                        </picture>
+                    </article>
+                    <article class="hero-slide" aria-label="4 / 4" aria-hidden="true" inert>
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="images/used/dayand-mob-26.jpg">
+                            <img class="hero-slide__image" src="images/used/dayand-dt-28.jpg" alt="고양이 그래픽 티셔츠를 입은 사람과 고양이" draggable="false">
+                        </picture>
+                    </article>
+                </div>
+
+                <button class="hero-arrow hero-arrow--previous" type="button" aria-label="이전 배너">
+                    <span aria-hidden="true"></span>
+                </button>
+                <button class="hero-arrow hero-arrow--next" type="button" aria-label="다음 배너">
+                    <span aria-hidden="true"></span>
+                </button>
+
+                <div class="hero-controls">
+                    <div class="hero-pagination" aria-label="배너 선택">
+                        <button class="hero-pagination__item" type="button" aria-label="1번 배너" aria-pressed="true"></button>
+                        <button class="hero-pagination__item" type="button" aria-label="2번 배너" aria-pressed="false"></button>
+                        <button class="hero-pagination__item" type="button" aria-label="3번 배너" aria-pressed="false"></button>
+                        <button class="hero-pagination__item" type="button" aria-label="4번 배너" aria-pressed="false"></button>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="best-products" id="best-products" aria-labelledby="best-products-title">
-            <h1 class="best-products__title" id="best-products-title">베스트 상품</h1>
-            <p class="best-products__description">가장 사랑받은 아이템들</p>
-            <div class="best-products__grid" aria-label="베스트 상품 이미지 자리">
-                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
-                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
-                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
-                <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+            <div class="inner-box best-products__inner">
+                <h1 class="best-products__title" id="best-products-title">베스트 상품</h1>
+                <p class="best-products__description">가장 사랑받은 아이템들</p>
+                <div class="best-products__grid" aria-label="베스트 상품 이미지 자리">
+                    <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+                    <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+                    <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+                    <div class="best-products__image image-placeholder" role="img" aria-label="상품 이미지 자리"></div>
+                </div>
             </div>
         </section>
     </main>
+    <aside class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title" aria-hidden="true" inert hidden>
+        <div class="mobile-menu__panel">
+            <header class="mobile-menu__header">
+                <div class="mobile-menu__intro">
+                    <strong id="mobile-menu-title">로그인 해주세요</strong>
+                    <p>회원가입하고 다양한 혜택을 받으세요.</p>
+                </div>
+                <button class="icon-button mobile-menu__close" type="button" aria-label="메뉴 닫기">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m5 5 14 14M19 5 5 19"></path>
+                    </svg>
+                </button>
+            </header>
+            <div class="mobile-menu__actions" aria-label="회원 메뉴">
+                <button class="mobile-menu__action" type="button">로그인</button>
+                <button class="mobile-menu__action mobile-menu__action--signup" type="button">
+                    <span class="mobile-menu__point">+1,000P</span>
+                    회원가입
+                </button>
+                <button class="mobile-menu__action" type="button">주문조회</button>
+            </div>
+            <nav class="mobile-menu__navigation" aria-label="모바일 메뉴">
+                <a class="mobile-menu__link" href="#best-products">APPAREL</a>
+                <a class="mobile-menu__link" href="#best-products">굿즈</a>
+                <div class="mobile-menu__community">
+                    <button class="mobile-menu__link mobile-menu__community-toggle" type="button" aria-expanded="false" aria-controls="mobile-community-links">
+                        커뮤니티
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m6 9 6 6 6-6"></path>
+                        </svg>
+                    </button>
+                    <div class="mobile-menu__community-links" id="mobile-community-links" hidden>
+                        <a href="#best-products">공지사항</a>
+                        <a href="#best-products">이벤트</a>
+                        <a href="#best-products">고객 후기</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="mobile-menu__languages" role="group" aria-label="언어 선택">
+                <button class="mobile-menu__language" type="button" data-language="ko" aria-label="한국어" aria-pressed="true">
+                    <img src="images/img-mob-menu/dayand-mob-95.png" alt="">
+                </button>
+                <button class="mobile-menu__language" type="button" data-language="en" aria-label="English" aria-pressed="false">
+                    <img src="images/img-mob-menu/dayand-mob-88.png" alt="">
+                </button>
+            </div>
+        </div>
+    </aside>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
