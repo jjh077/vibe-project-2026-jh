@@ -1,4 +1,4 @@
-﻿const hero = document.querySelector(".hero");
+const hero = document.querySelector(".hero");
 const track = document.querySelector(".hero-track");
 const slides = [...document.querySelectorAll(".hero-slide")];
 const indicators = [...document.querySelectorAll(".hero-pagination__item")];
@@ -179,6 +179,7 @@ const setMenuOpen = (isOpen) => {
       return;
     }
 
+    if (typeof setSearchOpen === "function") setSearchOpen(false);
     mobileMenu.hidden = false;
     mobileMenu.inert = false;
     mobileMenu.setAttribute("aria-hidden", "false");
@@ -331,4 +332,111 @@ moreProductsBtn.addEventListener("click", () => {
   const isExpanded = bestProductsSection.classList.toggle("is-expanded");
   moreProductsBtn.setAttribute("aria-expanded", String(isExpanded));
   moreProductsLabel.textContent = isExpanded ? "접기" : "더보기";
+});
+
+/* ==========================================================================
+   검색 드로어 (Search Drawer)
+   ========================================================================== */
+const searchButtons = [...document.querySelectorAll(".header-search-btn")];
+const searchDrawer = document.getElementById("search-drawer");
+const searchClose = searchDrawer?.querySelector(".search-drawer__close");
+const searchBackdrop = searchDrawer?.querySelector(".search-drawer__backdrop");
+const searchInput = searchDrawer?.querySelector(".search-drawer__input");
+const searchForm = searchDrawer?.querySelector(".search-drawer__form");
+
+let searchLastFocused = null;
+let searchCloseTimer = 0;
+
+function setSearchOpen(isOpen) {
+  if (!searchDrawer) return;
+  window.clearTimeout(searchCloseTimer);
+
+  if (isOpen) {
+    if (typeof setMenuOpen === "function" && !mobileMenu.hidden) {
+      setMenuOpen(false);
+    }
+
+    searchLastFocused = document.activeElement;
+    searchDrawer.hidden = false;
+    searchDrawer.inert = false;
+    searchDrawer.setAttribute("aria-hidden", "false");
+    searchButtons.forEach((btn) => btn.setAttribute("aria-expanded", "true"));
+    document.body.classList.add("is-search-open");
+
+    requestAnimationFrame(() => {
+      searchDrawer.classList.add("is-open");
+      if (searchInput) {
+        searchInput.focus();
+      } else if (searchClose) {
+        searchClose.focus();
+      }
+    });
+  } else {
+    searchDrawer.classList.remove("is-open");
+    searchDrawer.setAttribute("aria-hidden", "true");
+    searchButtons.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
+    document.body.classList.remove("is-search-open");
+
+    searchCloseTimer = window.setTimeout(() => {
+      searchDrawer.hidden = true;
+      searchDrawer.inert = true;
+    }, 300);
+
+    if (searchLastFocused && typeof searchLastFocused.focus === "function") {
+      searchLastFocused.focus();
+    }
+  }
+};
+
+searchButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    setSearchOpen(true);
+  });
+});
+
+searchClose?.addEventListener("click", () => {
+  setSearchOpen(false);
+});
+
+searchBackdrop?.addEventListener("click", () => {
+  setSearchOpen(false);
+});
+
+searchDrawer?.addEventListener("click", (event) => {
+  if (event.target.closest("a")) {
+    setSearchOpen(false);
+  }
+});
+
+searchForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+});
+
+searchDrawer?.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    setSearchOpen(false);
+    return;
+  }
+
+  if (event.key !== "Tab") {
+    return;
+  }
+
+  const focusableItems = [
+    ...searchDrawer.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled])',
+    ),
+  ];
+  if (focusableItems.length === 0) return;
+
+  const firstItem = focusableItems[0];
+  const lastItem = focusableItems[focusableItems.length - 1];
+
+  if (event.shiftKey && document.activeElement === firstItem) {
+    event.preventDefault();
+    lastItem.focus();
+  } else if (!event.shiftKey && document.activeElement === lastItem) {
+    event.preventDefault();
+    firstItem.focus();
+  }
 });
