@@ -12,6 +12,10 @@ const extraCategory = document.querySelector(".header__mobile-extra");
 const communityToggle = document.querySelector(".mobile-menu__community-toggle");
 const communityLinks = document.querySelector(".mobile-menu__community-links");
 const languageButtons = [...document.querySelectorAll(".mobile-menu__language")];
+const header = document.querySelector(".outer-box--header");
+const quickMenu = document.querySelector(".quick-menu");
+const recentProductsButton = quickMenu?.querySelector('[data-action="recent"]');
+const topButton = quickMenu?.querySelector('[data-action="top"]');
 
 if (
   !hero ||
@@ -42,6 +46,40 @@ let pointerStartX = null;
 let wasMenuToggleFocused = false;
 let heroIsVisible = true;
 const mobileViewport = window.matchMedia("(max-width: 768px)");
+let previousScrollY = window.scrollY;
+
+const updateScrollState = () => {
+  if (!header || !hero || !quickMenu) return;
+
+  const scrollY = window.scrollY;
+  const isPastHero = scrollY >= hero.offsetTop + hero.offsetHeight;
+  const isScrollingDown = scrollY > previousScrollY;
+  const shouldShowQuickMenu = scrollY > 0 && (!mobileViewport.matches || isPastHero);
+
+  header.classList.toggle("is-scrolled", scrollY > 2);
+  header.classList.toggle(
+    "is-category-hidden",
+    mobileViewport.matches && isPastHero && isScrollingDown,
+  );
+
+  quickMenu.classList.toggle("is-visible", shouldShowQuickMenu);
+  quickMenu.setAttribute("aria-hidden", String(!shouldShowQuickMenu));
+  quickMenu.inert = !shouldShowQuickMenu;
+  previousScrollY = scrollY;
+};
+
+window.addEventListener("scroll", updateScrollState, { passive: true });
+window.addEventListener("resize", updateScrollState);
+mobileViewport.addEventListener("change", updateScrollState);
+updateScrollState();
+
+recentProductsButton?.addEventListener("click", () => setSearchOpen(true));
+topButton?.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+  });
+});
 
 const updateSlide = (nextIndex) => {
   activeIndex = (nextIndex + slides.length) % slides.length;
@@ -440,3 +478,218 @@ searchDrawer?.addEventListener("keydown", (event) => {
     firstItem.focus();
   }
 });
+
+const shortsSection = document.getElementById("youtube-shorts");
+const shortsTitle = document.getElementById("shorts-title");
+const shortsDescription = document.getElementById("shorts-description");
+const shortsViewport = document.getElementById("shorts-viewport");
+const shortsTrack = document.getElementById("shorts-track");
+const shortsPagination = document.getElementById("shorts-pagination");
+const shortsStatus = document.getElementById("shorts-status");
+
+if (
+  shortsSection &&
+  shortsTitle &&
+  shortsDescription &&
+  shortsViewport &&
+  shortsTrack &&
+  shortsPagination &&
+  shortsStatus
+) {
+  fetch("data/yt-shorts.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("쇼츠 데이터를 불러오지 못했습니다.");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      const shorts = Array.isArray(data.shorts) ? data.shorts : [];
+
+      if (shorts.length === 0) {
+        throw new Error("표시할 쇼츠가 없습니다.");
+      }
+
+      shortsTitle.textContent = data.title || "Youtube Shorts";
+      shortsDescription.textContent = data.description || "";
+
+      const cards = [];
+      for (let copyIndex = 0; copyIndex < 3; copyIndex += 1) {
+        shorts.forEach((short, shortIndex) => {
+          const item = document.createElement("li");
+          const link = document.createElement("a");
+          const image = document.createElement("img");
+
+          item.className = "shorts-card";
+          item.dataset.shortIndex = String(shortIndex);
+          link.className = "shorts-card__link";
+          link.href = short.url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.draggable = false;
+          link.setAttribute("aria-label", `${short.text} (새 창에서 열기)`);
+          image.className = "shorts-card__image";
+          image.src = short.image;
+          image.alt = short.alt;
+          image.draggable = false;
+          image.loading = "lazy";
+          image.decoding = "async";
+
+          link.append(image);
+          item.append(link);
+          shortsTrack.append(item);
+          cards.push(item);
+        });
+      }
+
+      let activeIndex = shorts.length - 1;
+      let activeCardIndex = shorts.length + activeIndex;
+      let pointerStartX = null;
+      let pointerMoved = false;
+      let suppressCardClick = false;
+      const paginationButtons = shorts.map((short, index) => {
+        const button = document.createElement("button");
+        button.className = "shorts-pagination__button";
+        button.type = "button";
+        button.setAttribute("aria-label", `${index + 1}번 쇼츠: ${short.text}`);
+        button.setAttribute("aria-pressed", String(index === activeIndex));
+        button.addEventListener("click", () => {
+          goToShort(index);
+        });
+        shortsPagination.append(button);
+        return button;
+      });
+
+      function updateShortsCarousel() {
+        const activeCard = cards[activeCardIndex];
+        const cardCenter = activeCard.offsetLeft + activeCard.offsetWidth / 2;
+        const offset = shortsViewport.clientWidth / 2 - cardCenter;
+
+        shortsTrack.style.transform = `translate3d(${offset}px, 0, 0)`;
+        cards.forEach((card, index) => {
+          const distance = Math.abs(index - activeCardIndex);
+          const isActive = distance === 0;
+
+          card.classList.toggle("is-active", isActive);
+          card.dataset.distance = String(distance);
+          card.setAttribute("aria-hidden", String(distance > 2));
+          card.inert = distance > 2;
+        });
+        paginationButtons.forEach((button, index) => {
+          button.setAttribute("aria-pressed", String(index === activeIndex));
+        });
+      }
+
+      function normalizeShortsCarousel() {
+        if (activeCardIndex >= shorts.length * 2) {
+          activeCardIndex -= shorts.length;
+        } else if (activeCardIndex < shorts.length) {
+          activeCardIndex += shorts.length;
+        } else {
+          return;
+        }
+
+        shortsTrack.style.transition = "none";
+        updateShortsCarousel();
+        shortsTrack.offsetHeight;
+        shortsTrack.style.removeProperty("transition");
+      }
+
+      function goToShort(nextIndex) {
+        const normalizedIndex = (nextIndex + shorts.length) % shorts.length;
+        if (normalizedIndex === activeIndex) return;
+
+        if (activeIndex === shorts.length - 1 && normalizedIndex === 0) {
+          activeCardIndex = shorts.length * 2;
+        } else if (activeIndex === 0 && normalizedIndex === shorts.length - 1) {
+          activeCardIndex = shorts.length - 1;
+        } else {
+          activeCardIndex = shorts.length + normalizedIndex;
+        }
+
+        activeIndex = normalizedIndex;
+        updateShortsCarousel();
+
+        if (getComputedStyle(shortsTrack).transitionDuration === "0s") {
+          normalizeShortsCarousel();
+        }
+      }
+
+      shortsTrack.addEventListener("transitionend", (event) => {
+        if (event.target === shortsTrack && event.propertyName === "transform") {
+          normalizeShortsCarousel();
+        }
+      });
+
+      shortsViewport.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+          event.preventDefault();
+          goToShort(activeIndex + (event.key === "ArrowRight" ? 1 : -1));
+        }
+      });
+
+      shortsViewport.addEventListener("pointerdown", (event) => {
+        if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) {
+          return;
+        }
+
+        pointerStartX = event.clientX;
+        pointerMoved = false;
+      });
+
+      shortsViewport.addEventListener("pointermove", (event) => {
+        if (pointerStartX === null) return;
+
+        if (Math.abs(event.clientX - pointerStartX) > 8) {
+          pointerMoved = true;
+          if (!shortsViewport.hasPointerCapture(event.pointerId)) {
+            shortsViewport.setPointerCapture(event.pointerId);
+          }
+          shortsViewport.classList.add("is-dragging");
+        }
+      });
+
+      shortsViewport.addEventListener("pointerup", (event) => {
+        if (pointerStartX === null) return;
+
+        const swipeDistance = event.clientX - pointerStartX;
+        pointerStartX = null;
+        shortsViewport.classList.remove("is-dragging");
+
+        if (!pointerMoved) return;
+
+        suppressCardClick = true;
+        window.setTimeout(() => {
+          suppressCardClick = false;
+        }, 0);
+
+        if (Math.abs(swipeDistance) >= 40) {
+          goToShort(activeIndex + (swipeDistance < 0 ? 1 : -1));
+        }
+      });
+
+      shortsViewport.addEventListener("pointercancel", () => {
+        pointerStartX = null;
+        pointerMoved = false;
+        shortsViewport.classList.remove("is-dragging");
+      });
+
+      shortsViewport.addEventListener(
+        "click",
+        (event) => {
+          if (!suppressCardClick) return;
+
+          event.preventDefault();
+          event.stopPropagation();
+        },
+        true,
+      );
+
+      window.addEventListener("resize", updateShortsCarousel);
+      updateShortsCarousel();
+    })
+    .catch(() => {
+      shortsStatus.textContent = "쇼츠를 불러오지 못했습니다.";
+    });
+}

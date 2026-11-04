@@ -1,0 +1,42 @@
+{
+  "title": "Youtube Shorts",
+  "description": "코비와 베리의 짧은 이야기",
+  "shorts": [
+    {
+      "url": "https://youtube.com/shorts/v86n--MXa9w",
+      "image": "https://ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/upload/NNEditor/20261103/b909fa03bb9046769bca794d4723b92c.jpg",
+      "alt": "집사 가방 깨물다가 참교육 당한 고양이",
+      "text": "집사 가방 깨물다가 참교육 당한 고양이"
+    },
+    {
+      "url": "https://youtube.com/shorts/3fysRVe1mCM",
+      "image": "https://ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/upload/NNEditor/20261031/052261e5d6ae36e53051b2bce64f20b0.jpg",
+      "alt": "귀청소 하던 고양이가 귀를 지키는 방법",
+      "text": "귀청소 하던 고양이가 귀를 지키는 방법"
+    },
+    {
+      "url": "https://youtube.com/shorts/Obwpz24DxbE",
+      "image": "https://ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/upload/NNEditor/20261030/eb04d0d7206ba33ea2c7a552d9d5b9fd.jpg",
+      "alt": "집사 다리에 슬쩍 뽀뽀하는 고양이",
+      "text": "집사 다리에 슬쩍 뽀뽀하는 고양이"
+    },
+    {
+      "url": "https://youtube.com/shorts/UuKZ87waVp8",
+      "image": "https://ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/upload/NNEditor/20261027/231d03c83a1b751bb818322246c7fc14.jpg",
+      "alt": "고양이가 하도 조르길래 문열어 줬더니 생긴일",
+      "text": "고양이가 하도 조르길래 문열어 줬더니 생긴일"
+    },
+    {
+      "url": "https://youtube.com/shorts/98ORJDftqZs",
+      "image": "https://ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/upload/NNEditor/20261024/239158a47346debc30478e476854382e.jpg",
+      "alt": "고양이에게 귤을 주면 일어나는일ㅋㅋㅋ",
+      "text": "고양이에게 귤을 주면 일어나는일ㅋㅋㅋ"
+    },
+    {
+      "url": "https://youtube.com/shorts/vyRRL3__i0w",
+      "image": "https://ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/upload/NNEditor/20261023/22f270399a66fdc9f7c570a45732f981.jpg",
+      "alt": "고양이 기분 풀어주는 얼굴 맛사지 법",
+      "text": "고양이 기분 풀어주는 얼굴 맛사지 법"
+    }
+  ]
+}
