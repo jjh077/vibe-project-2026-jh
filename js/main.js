@@ -320,57 +320,6 @@ updateSlide(0);
 startAutoplay();
 
 
-const bestProductsSection = document.getElementById("best-products");
-const productCards = [...document.querySelectorAll(".product-card")];
-const moreProductsBtn = document.getElementById("more-products-btn");
-const moreProductsLabel = moreProductsBtn?.querySelector(".more-button__label");
-
-if (!bestProductsSection || !moreProductsBtn || !moreProductsLabel) {
-  throw new Error("베스트 상품 섹션을 찾을 수 없습니다.");
-}
-
-productCards.forEach((card) => {
-  const imageButton = card.querySelector(".product-card__thumb");
-
-  if (!imageButton) {
-    throw new Error("상품 사진 버튼을 찾을 수 없습니다.");
-  }
-
-  imageButton.setAttribute("aria-pressed", "false");
-
-  imageButton.addEventListener("click", () => {
-    if (!mobileViewport.matches || card.dataset.noSwap === "true") {
-      return;
-    }
-
-    const isToggled = card.classList.toggle("is-toggled");
-    imageButton.setAttribute("aria-pressed", String(isToggled));
-  });
-});
-
-bestProductsSection.querySelectorAll(".product-card__action-btn").forEach((button) => {
-  button.addEventListener("click", () => {
-    const isActive = button.classList.toggle("is-active");
-    const actionLabel = button.getAttribute("aria-label") || "";
-    const separatorIndex = actionLabel.indexOf(": ");
-    const productName = actionLabel.slice(separatorIndex + 2);
-    const isLikeButton = actionLabel.startsWith("좋아요");
-    const activeLabel = isLikeButton ? "좋아요 취소" : "장바구니에서 빼기";
-    const inactiveLabel = isLikeButton ? "좋아요" : "장바구니 담기";
-
-    button.setAttribute("aria-pressed", String(isActive));
-    button.setAttribute(
-      "aria-label",
-      `${isActive ? activeLabel : inactiveLabel}: ${productName}`,
-    );
-  });
-});
-
-moreProductsBtn.addEventListener("click", () => {
-  const isExpanded = bestProductsSection.classList.toggle("is-expanded");
-  moreProductsBtn.setAttribute("aria-expanded", String(isExpanded));
-  moreProductsLabel.textContent = isExpanded ? "접기" : "더보기";
-});
 
 
 /* ==========================================================================
