@@ -1,0 +1,50 @@
+{
+  "company_info": {
+    "name": "그루밍데이",
+    "business_name": "데이캣",
+    "representative": "최미라",
+    "privacy_officer": "최미라",
+    "privacy_email": "groomingdaygirl@gmail.com",
+    "mail_order_sales_number": "2024-화성동탄-3950",
+    "business_registration_number": "669-26-01109",
+    "address": "18455 경기도 화성시 동탄중심상가1길 33 (반송동) 동탄미래도프라자 9층 901-222호",
+    "return_address": "경기도 화성시 동탄중심상가1길 33 (반송동) 동탄미래도프라자 9층 901-222호",
+    "customer_service_number": "010-2667-1448",
+    "email": "groomingdaygirl@gmail.com"
+  },
+  "customer_center": {
+    "title": "고객만족센터",
+    "kakao_talk": "카카오톡 상담 (@그루밍데이)",
+    "consulting_hours": "상담시간 13:00 ~ 17:00",
+    "closed_days": "토요일, 일요일, 공휴일 휴무"
+  },
+  "footer_links": [
+    {
+      "name": "소개",
+      "url": "/shopinfo/company.html"
+    },
+    {
+      "name": "이용약관",
+      "url": "/member/mall_agreement.html"
+    },
+    {
+      "name": "개인정보처리방침",
+      "url": "/member/privacy.html"
+    },
+    {
+      "name": "이용안내",
+      "url": "/shopinfo/guide.html"
+    }
+  ],
+  "sns": [
+    {
+      "platform": "instagram",
+      "url": "https://www.instagram.com/groo.mingday?igsh=MTg1M21jZGZodTN0Mw=="
+    },
+    {
+      "platform": "youtube",
+      "url": "https://youtube.com/@groomingday?si=LSaP90Zdp6DAR58H"
+    }
+  ],
+  "copyright": "Copyright © 그루밍데이. All rights reserved."
+}
