@@ -372,6 +372,7 @@ moreProductsBtn.addEventListener("click", () => {
   moreProductsLabel.textContent = isExpanded ? "접기" : "더보기";
 });
 
+
 /* ==========================================================================
    검색 드로어 (Search Drawer)
    ========================================================================== */
@@ -693,3 +694,4 @@ if (
       shortsStatus.textContent = "쇼츠를 불러오지 못했습니다.";
     });
 }
+
