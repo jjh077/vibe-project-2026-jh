@@ -1,0 +1,26 @@
+{
+  "background_video": {
+    "title": "YouTube video player",
+    "src": "https://www.youtube.com/embed/xx87ov5Eo3Q?si=TCxdXfQb7xQzA4js&enablejsapi=1&playsinline=1&mute=1&rel=0&origin=https%3A%2F%2Fdayandhome.com&controls=0&modestbranding=1&iv_load_policy=3&cc_load_policy=0&fs=0&loop=1&playlist=xx87ov5Eo3Q&autoplay=1"
+  },
+  "items": [
+    {
+      "url": "/board/lookbook/read.html?product_no=39&cate_no=1&display_group=8",
+      "image": "//ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/product/medium/20251111/6ce6f7d283f0efd39732c9daef872ed5.jpg",
+      "subject": "아깽이 시절 베리,코비",
+      "comment": "우리집에 왔던 너무나 작고 소중한 귀여운 코비와 베리의 앨범"
+    },
+    {
+      "url": "/board/lookbook/read.html?product_no=41&cate_no=1&display_group=8",
+      "image": "//ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/product/medium/20251112/7fed63e961538abf7e2011ff3e16fffe.jpg",
+      "subject": "개그캐 코비,베리 앨범",
+      "comment": "보고만 있어도 웃음이 끊이지 않는 귀염둥이들"
+    },
+    {
+      "url": "/board/lookbook/read.html?product_no=40&cate_no=1&display_group=8",
+      "image": "//ecimg.cafe24img.com/pg2325b82001230061/cobiberrycat/web/product/medium/20260603/6107902301c7366929453a094a6e3a86.jpg",
+      "subject": "시원함을 찾아 떠난 두 고양이",
+      "comment": "올 여름도 각자의 방식으로 더위를 피하는 코비와 베리"
+    }
+  ]
+}
