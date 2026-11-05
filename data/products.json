@@ -9,14 +9,68 @@
       "name": "코비&베리 무릎담요+스티커 2종세트",
       "price": 24500,
       "image": "images/img-dt/dayand-dt-61.jpg",
-      "category": "굿즈"
+      "category": "굿즈",
+      "badge": "BEST",
+      "rating": 4.5,
+      "reviewCount": 4
     },
     {
       "id": "blossom-cat-tee",
       "name": "블라썸 고양이 반팔티셔츠",
       "price": 26000,
       "image": "images/img-dt/dayand-dt-56.jpg",
-      "category": "APPAREL"
+      "category": "APPAREL",
+      "badge": "BEST",
+      "variants": [
+        {
+          "label": "화이트 - S",
+          "price": 26000
+        },
+        {
+          "label": "화이트 - M",
+          "price": 26000,
+          "sameDay": true
+        },
+        {
+          "label": "화이트 - L",
+          "price": 26000,
+          "sameDay": true
+        },
+        {
+          "label": "화이트 - XL",
+          "price": 26000,
+          "sameDay": true
+        },
+        {
+          "label": "화이트 - 2XL",
+          "price": 28000
+        },
+        {
+          "label": "블랙 - S",
+          "price": 31000,
+          "dim": true
+        },
+        {
+          "label": "블랙 - M",
+          "price": 31000,
+          "dim": true
+        },
+        {
+          "label": "블랙 - L",
+          "price": 31000,
+          "dim": true
+        },
+        {
+          "label": "블랙 - XL",
+          "price": 31000,
+          "dim": true
+        },
+        {
+          "label": "블랙 - 2XL",
+          "price": 31000,
+          "dim": true
+        }
+      ]
     },
     {
       "id": "moment-cat-tee",
@@ -40,7 +94,15 @@
       "image": "",
       "category": "굿즈",
       "badge": "NEW",
-      "options": ["베리", "코비"]
+      "options": [
+        {
+          "name": "베리"
+        },
+        {
+          "name": "코비",
+          "soldOut": true
+        }
+      ]
     },
     {
       "id": "berry-face-keyring",

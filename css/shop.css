@@ -649,3 +649,200 @@
 
 /* 메인 베스트 상품 카드: 클릭 가능 */
 .product-card.is-clickable { cursor: pointer; }
+
+/* ==========================================================================
+   상세페이지 추가: 이미지 박스 / 별점·리뷰 / 현재 N명 / 옵션 / 네이버페이
+   ========================================================================== */
+
+/* 이미지 박스: 큰 이미지 + 바로 아래 작은 이미지 5개 */
+.product-gallery__main { background: #f4f4f4; border-radius: 10px; }
+.product-gallery__thumbs { gap: 10px; margin-top: 10px; }
+.product-gallery__thumb { border: 0; border-radius: 8px; opacity: 0.4; transition: opacity 0.2s; }
+.product-gallery__thumb:hover { opacity: 0.75; }
+.product-gallery__thumb[aria-pressed="true"] { opacity: 1; }
+
+/* BEST 뱃지 → 별 4.5 | 리뷰 4건 → 현재 N명 */
+.product-info__top { min-height: 24px; }
+.product-info__top .badge { padding: 0 4px; font-size: 0.6875rem; line-height: 1.35; }
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.product-rating__star { width: 14px; height: 14px; fill: #ffc400; }
+.product-rating__score { font-weight: 600; }
+.product-rating__divider { width: 1px; height: 10px; margin: 0 6px; background: #ddd; }
+.product-rating__review { font-weight: 500; }
+
+.product-presence {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin: 8px 0 0;
+  padding: 5px 10px 5px 8px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgb(0 0 0 / 18%);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.product-presence svg { width: 14px; height: 14px; fill: #111; }
+.product-presence__count { color: #f21d1d; font-style: normal; font-weight: 600; }
+
+.product-info__name { margin-top: 1rem; }
+
+/* 옵션: 2종 상품 버튼 (품절은 사선) */
+.product-option__btn { min-width: 52px; height: 36px; padding: 0 1rem; color: #111; }
+.product-option__btn.is-selected { border-color: #111; }
+.product-option__btn.is-soldout {
+  position: relative;
+  border-color: #e5e5e5;
+  color: #b5b5b5;
+  background: linear-gradient(to top right, transparent calc(50% - 0.5px), #cfcfcf calc(50% - 0.5px), #cfcfcf calc(50% + 0.5px), transparent calc(50% + 0.5px)), #fff;
+  cursor: not-allowed;
+}
+
+/* 옵션: 의류 드롭다운 (색상 - 사이즈  가격) */
+.product-select { position: relative; }
+
+.product-select__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 44px;
+  padding: 0 1rem;
+  border: 1px solid #b9b9b9;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 0.875rem;
+  color: #222;
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-select__toggle.is-error { border-color: #d6455d; }
+.product-select__toggle[aria-expanded="true"] { border-color: #111; }
+
+.product-select__arrow {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #4ab4ea;
+  stroke-width: 1.6;
+  transition: transform 0.2s;
+}
+
+.product-select__toggle[aria-expanded="true"] .product-select__arrow { transform: rotate(180deg); }
+
+.product-select__list {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 270px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid #111;
+  border-top-color: #e5e5e5;
+  background: #fff;
+  list-style: none;
+}
+
+.product-select__list[hidden] { display: none; }
+
+.product-select__item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  font-size: 0.875rem;
+  color: #222;
+  text-align: left;
+  cursor: pointer;
+}
+
+.product-select__item:hover { background: #f7f7f7; }
+.product-select__item.is-dim .product-select__name { color: #8a8a8a; }
+.product-select__price { color: var(--shop-brown); }
+
+/* 바로구매 / 장바구니: 이미지처럼 갈색 버튼 그대로 노출 */
+.product-actions__btn { border-radius: 4px; }
+.product-actions__btn--buy:disabled { opacity: 1; cursor: default; }
+
+/* 네이버페이 */
+.npay { width: 285px; max-width: 100%; margin: 1.4rem auto 0; font-size: 0.75rem; }
+.npay__box { display: flex; align-items: center; gap: 6px; padding-top: 8px; border-top: 2px solid #111; }
+.npay__brand { display: grid; gap: 1px; margin: 0; line-height: 1.25; color: #333; font-size: 0.625rem; }
+.npay__brand strong { color: #03c75a; font-size: 0.8125rem; font-weight: 800; letter-spacing: -0.02em; }
+
+.npay__buy {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 38px;
+  border: 0;
+  border-radius: 3px;
+  background: #00de5a;
+  color: #111;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.npay__buy svg { width: 16px; height: 16px; }
+.npay__buy svg circle { fill: #111; }
+.npay__buy svg path { fill: #00de5a; }
+.npay__buy b { font-size: 0.875rem; font-weight: 800; }
+.npay__buy span { margin-left: 3px; font-weight: 700; }
+
+.npay__wish {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #333;
+  cursor: pointer;
+}
+
+.npay__connect {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  padding: 6px 0;
+  border-bottom: 1px solid #e5e5e5;
+  color: #666;
+  font-size: 0.6875rem;
+}
+
+.npay__connect strong { flex: 0 0 auto; color: #03c75a; font-weight: 700; }
+.npay__connect-text { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.npay__connect-nav { display: inline-flex; flex: 0 0 auto; gap: 2px; }
+.npay__connect-nav i { display: grid; width: 16px; height: 16px; place-items: center; border: 1px solid #ddd; font-style: normal; line-height: 1; }
+
+@media (max-width: 768px) {
+  .npay { width: 100%; }
+  .product-select__list { max-height: 220px; }
+}
+
+.product-total__value strong { font-style: normal; }
