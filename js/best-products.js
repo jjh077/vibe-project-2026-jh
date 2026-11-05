@@ -1,3 +1,10 @@
+import {
+  parsePrice,
+  productPageUrl,
+  resolveSrc,
+  saveLastProduct,
+} from "./cart.js";
+
 const section = document.getElementById("best-products");
 
 if (section) {
@@ -98,8 +105,7 @@ if (section) {
     // 이미지 영역: 기본 이미지 + 호버/클릭 시 전환 이미지
     thumb.className = "product-card__thumb";
     thumb.type = "button";
-    thumb.setAttribute("aria-label", `상품 사진 전환: ${product.name}`);
-    thumb.setAttribute("aria-pressed", "false");
+    thumb.setAttribute("aria-label", `상품 상세 보기: ${product.name}`);
 
     defaultImg.className = "product-card__img product-card__img--default";
     defaultImg.src = normalizeSrc(product.thumbnail);
@@ -116,14 +122,6 @@ if (section) {
 
     thumb.append(defaultImg, hoverImg);
 
-    // 모바일: 사진 클릭 시 이미지 전환
-    thumb.addEventListener("click", () => {
-      if (!mobileQuery.matches) {
-        return;
-      }
-      const isToggled = card.classList.toggle("is-toggled");
-      thumb.setAttribute("aria-pressed", String(isToggled));
-    });
 
     // 아이콘 (좋아요, 장바구니)
     actions.className = "product-card__actions";
@@ -150,7 +148,8 @@ if (section) {
     }
 
     name.className = "product-card__name";
-    link.href = product.url;
+    const productKey = product.id || product.name;
+    link.href = productPageUrl(productKey);
     link.textContent = product.name;
     name.append(link);
 
@@ -159,6 +158,22 @@ if (section) {
 
     info.append(name, price);
     card.append(thumb, actions, info);
+
+    // 카드 클릭 → 상품 상세 페이지 (이미지/상품명/가격 전달)
+    card.classList.add("is-clickable");
+    card.addEventListener("click", (event) => {
+      if (event.target.closest(".product-card__actions")) return;
+      if (event.target.closest("a")) event.preventDefault();
+
+      saveLastProduct({
+        id: productKey,
+        name: product.name,
+        price: parsePrice(product.price),
+        image: resolveSrc(product.thumbnail),
+        hoverImage: resolveSrc(product.hover_image),
+      });
+      window.location.href = productPageUrl(productKey);
+    });
     return card;
   };
 

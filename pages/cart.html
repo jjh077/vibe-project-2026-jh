@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>장바구니 | 그루밍데이</title>
+    <meta name="description" content="그루밍데이 장바구니" />
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/shop.css" />
+  </head>
+
+  <body>
+    <header class="outer-box outer-box--header">
+      <div class="inner-box header__inner">
+        <div class="part-box header__desktop">
+          <nav class="part-box header__desktop-menu" aria-label="주요 메뉴">
+            <a href="../index.html#best-products">APPAREL</a>
+            <a href="../index.html#best-products">굿즈</a>
+            <a href="notice.html">커뮤니티</a>
+          </nav>
+
+          <a class="brand-logo" href="../index.html" aria-label="그루밍데이 홈"
+            >그루밍데이</a
+          >
+
+          <nav
+            class="part-box header__desktop-utilities"
+            aria-label="사용자 메뉴"
+          >
+            <button
+              class="icon-button header-search-btn"
+              type="button"
+              aria-label="검색"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="search-drawer"
+            >
+              <img src="../images/used/icon_search_b.svg" alt="" />
+            </button>
+            <button class="icon-button" type="button" aria-label="마이페이지">
+              <img src="../images/used/icon_header_mypage_b_512.svg" alt="" />
+            </button>
+            <button
+              class="icon-button cart-button"
+              type="button"
+              aria-label="장바구니, 0개"
+            >
+              <img src="../images/used/icon_header_cart_b_512.svg" alt="" />
+              <span class="cart-count" aria-hidden="true" hidden>0</span>
+              <span class="point-badge">+1,000P</span>
+            </button>
+            <button class="icon-button" type="button" aria-label="언어 선택">
+              <img src="../images/used/icon_header_global_b_512.svg" alt="" />
+            </button>
+          </nav>
+        </div>
+
+        <div class="header__mobile">
+          <div class="part-box header__mobile-top">
+            <div class="part-box header__mobile-leading">
+              <button
+                class="icon-button menu-toggle"
+                type="button"
+                aria-label="메뉴 열기"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+              >
+                <svg
+                  class="menu-toggle__icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    class="menu-toggle__line menu-toggle__line--top"
+                    d="M2 4h20"
+                  ></path>
+                  <path
+                    class="menu-toggle__line menu-toggle__line--middle"
+                    d="M2 12h20"
+                  ></path>
+                  <path
+                    class="menu-toggle__line menu-toggle__line--bottom"
+                    d="M2 20h20"
+                  ></path>
+                </svg>
+              </button>
+              <button class="icon-button" type="button" aria-label="마이페이지">
+                <img src="../images/used/icon_header_mypage_b_512.svg" alt="" />
+              </button>
+            </div>
+            <a class="brand-logo" href="../index.html" aria-label="그루밍데이 홈"
+              >그루밍데이</a
+            >
+            <nav
+              class="part-box header__mobile-utilities"
+              aria-label="사용자 메뉴"
+            >
+              <button
+                class="icon-button header-search-btn"
+                type="button"
+                aria-label="검색"
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="search-drawer"
+              >
+                <img src="../images/used/icon_search_b.svg" alt="" />
+              </button>
+              <button
+                class="icon-button cart-button"
+                type="button"
+                aria-label="장바구니, 0개"
+              >
+                <img src="../images/used/icon_header_cart_b_512.svg" alt="" />
+                <span class="cart-count" aria-hidden="true" hidden>0</span>
+              </button>
+            </nav>
+          </div>
+          <div class="part-box header__mobile-categories">
+            <nav
+              class="part-box header__mobile-menu"
+              id="mobile-categories"
+              aria-label="카테고리"
+            >
+              <a href="../index.html#best-products">APPAREL</a>
+              <a href="../index.html#best-products">굿즈</a>
+              <a class="header__mobile-extra" href="notice.html" hidden
+                >커뮤니티</a
+              >
+            </nav>
+            <button
+              class="icon-button category-toggle"
+              type="button"
+              aria-label="카테고리 더 보기"
+              aria-expanded="false"
+              aria-controls="mobile-categories"
+            >
+              <span aria-hidden="true">+</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="shop-page">
+      <nav class="shop-breadcrumb" aria-label="현재 위치">
+        <a href="../index.html" aria-label="홈"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7M5 10v10h5v-6h4v6h5V10"/></svg></a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">장바구니</span>
+      </nav>
+      <h1 class="shop-title">장바구니</h1>
+
+      <div class="cart-login">
+        <strong>로그인 후 더 많은 혜택을 받으세요 ›</strong>
+        <span>로그인을 하시면 장바구니에 담은 상품을 나중에도 확인하실 수 있습니다.</span>
+      </div>
+
+      <div class="cart-layout">
+        <section aria-label="장바구니 상품 목록">
+          <div class="cart-toolbar">
+            <label>
+              <input class="cart-check" type="checkbox" id="cart-check-all" />
+              전체선택
+            </label>
+            <button type="button" id="cart-delete-selected">선택삭제</button>
+          </div>
+          <ul class="cart-list" id="cart-list" aria-live="polite"></ul>
+          <p class="cart-sumbar" id="cart-sum-bar"></p>
+          <div class="cart-links">
+            <a href="#" data-soon>해외장바구니로 이동</a>
+            <a href="#" data-soon>견적서 출력</a>
+            <a href="#" id="cart-continue">쇼핑 계속하기</a>
+          </div>
+        </section>
+
+        <aside class="cart-summary" aria-label="주문 금액">
+          <h2 class="cart-summary__head">주문상품</h2>
+          <dl class="cart-summary__rows">
+            <div class="cart-summary__row"><dt>총 상품금액</dt><dd id="sum-product">0원</dd></div>
+            <div class="cart-summary__row"><dt>총 배송비</dt><dd id="sum-shipping">0원</dd></div>
+            <div class="cart-summary__row cart-summary__row--total"><dt>결제예정금액</dt><dd id="sum-pay">0원</dd></div>
+          </dl>
+          <div class="cart-summary__order">
+            <span class="cart-summary__count" id="sum-count">총 0개</span>
+            <button class="cart-summary__btn" type="button" id="cart-order">0원 주문하기</button>
+          </div>
+        </aside>
+      </div>
+      <p class="cart-note"><span id="cart-free-note"></span> · 할인 적용 금액은 주문서작성의 결제예정금액에서 확인 가능합니다.</p>
+      <div class="cart-toast" id="cart-toast" role="status" hidden></div>
+    </main>
+
+    <footer class="site-footer" id="site-footer" aria-label="사이트 정보"></footer>
+    <aside class="quick-menu" aria-label="빠른 메뉴" aria-hidden="true" inert>
+      <a
+        class="quick-menu__button quick-menu__button--kakao"
+        href="https://pf.kakao.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="카카오톡 채널"
+      >
+        <img src="../images/used/icon_kakaotalk_512.svg" alt="" />
+      </a>
+      <button
+        class="quick-menu__button"
+        type="button"
+        data-action="recent"
+        aria-label="최근 본 상품"
+      >
+        <img src="../images/used/icon_recent_b.svg" alt="" />
+      </button>
+      <button
+        class="quick-menu__button"
+        type="button"
+        data-action="top"
+        aria-label="맨 위로 이동"
+      >
+        <img src="../images/used/icon_arrowup_b.svg" alt="" />
+      </button>
+    </aside>
+    <aside
+      class="mobile-menu"
+      id="mobile-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mobile-menu-title"
+      aria-hidden="true"
+      inert
+      hidden
+    >
+      <div class="mobile-menu__panel">
+        <header class="mobile-menu__header">
+          <div class="mobile-menu__intro">
+            <strong id="mobile-menu-title">로그인 해주세요</strong>
+            <p>회원가입하고 다양한 혜택을 받으세요.</p>
+          </div>
+          <button
+            class="icon-button mobile-menu__close"
+            type="button"
+            aria-label="메뉴 닫기"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 5 14 14M19 5 5 19"></path>
+            </svg>
+          </button>
+        </header>
+        <div class="mobile-menu__actions" aria-label="회원 메뉴">
+          <button class="mobile-menu__action" type="button">로그인</button>
+          <button
+            class="mobile-menu__action mobile-menu__action--signup"
+            type="button"
+          >
+            <span class="mobile-menu__point">+1,000P</span>
+            회원가입
+          </button>
+          <button class="mobile-menu__action" type="button">주문조회</button>
+        </div>
+        <nav class="mobile-menu__navigation" aria-label="모바일 메뉴">
+          <a class="mobile-menu__link" href="../index.html#best-products">APPAREL</a>
+          <a class="mobile-menu__link" href="../index.html#best-products">굿즈</a>
+          <div class="mobile-menu__community">
+            <button
+              class="mobile-menu__link mobile-menu__community-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="mobile-community-links"
+            >
+              커뮤니티
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </button>
+            <div
+              class="mobile-menu__community-links"
+              id="mobile-community-links"
+              hidden
+            >
+              <a href="notice.html">공지사항</a>
+              <a href="notice.html#/?cat=%EC%9D%B4%EB%B2%A4%ED%8A%B8">이벤트</a>
+              <a href="../index.html#best-products">고객 후기</a>
+            </div>
+          </div>
+        </nav>
+        <div class="mobile-menu__languages" role="group" aria-label="언어 선택">
+          <button
+            class="mobile-menu__language"
+            type="button"
+            data-language="ko"
+            aria-label="한국어"
+            aria-pressed="true"
+          >
+            <img src="../images/img-mob-menu/dayand-mob-95.png" alt="" />
+          </button>
+          <button
+            class="mobile-menu__language"
+            type="button"
+            data-language="en"
+            aria-label="English"
+            aria-pressed="false"
+          >
+            <img src="../images/img-mob-menu/dayand-mob-88.png" alt="" />
+          </button>
+        </div>
+      </div>
+    </aside>
+    <aside
+      class="search-drawer"
+      id="search-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="search-drawer-title"
+      aria-hidden="true"
+      inert
+      hidden
+    >
+      <div class="search-drawer__backdrop" aria-hidden="true"></div>
+      <div class="search-drawer__panel">
+        <header class="search-drawer__header">
+          <div class="search-drawer__top">
+            <h2 class="search-drawer__title" id="search-drawer-title">검색</h2>
+            <button
+              class="icon-button search-drawer__close"
+              type="button"
+              aria-label="검색창 닫기"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m5 5 14 14M19 5 5 19"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="search-drawer__bar">
+            <form
+              class="search-drawer__form"
+              role="search"
+              onsubmit="return false;"
+            >
+              <input
+                class="search-drawer__input"
+                type="search"
+                placeholder="검색어를 입력해주세요"
+                aria-label="검색어 입력"
+                autocomplete="off"
+              />
+              <button
+                class="search-drawer__submit"
+                type="button"
+                aria-label="검색하기"
+              >
+                <img src="../images/used/icon_search_b.svg" alt="" />
+              </button>
+            </form>
+          </div>
+        </header>
+        <div class="search-drawer__body">
+          <section
+            class="search-drawer__section search-recent"
+            aria-labelledby="search-recent-title"
+          >
+            <div class="search-drawer__section-header">
+              <h3 class="search-drawer__section-title" id="search-recent-title">
+                최근 검색어
+              </h3>
+              <button class="search-drawer__link-btn" type="button">
+                전체삭제
+              </button>
+            </div>
+            <div class="search-recent__empty">
+              <p>최근 검색어가 없습니다.</p>
+            </div>
+          </section>
+
+          <hr class="search-drawer__divider" aria-hidden="true" />
+
+          <section
+            class="search-drawer__section search-viewed"
+            aria-labelledby="search-viewed-title"
+          >
+            <div class="search-drawer__section-header">
+              <h3 class="search-drawer__section-title" id="search-viewed-title">
+                최근 본 상품
+              </h3>
+              <a class="search-drawer__link-btn" href="../index.html#best-products"
+                >더보기</a
+              >
+            </div>
+            <ul class="search-viewed__list">
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-15.jpg"
+                      alt="고양이 유치원 - story sticker no.01"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >고양이 유치원 - story sticker no.01</strong
+                    >
+                    <span class="search-viewed__price">3,500원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-75.jpg"
+                      alt="모먼트 고양이 반팔티셔츠 - 2 color"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >모먼트 고양이 반팔티셔츠 - 2 color</strong
+                    >
+                    <span class="search-viewed__price">28,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-56.jpg"
+                      alt="블라썸 고양이 반팔티셔츠"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >블라썸 고양이 반팔티셔츠</strong
+                    >
+                    <span class="search-viewed__price">26,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-17.jpg"
+                      alt="베리 얼굴 키링"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name">베리 얼굴 키링</strong>
+                    <span class="search-viewed__price">7,900원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-11.jpg"
+                      alt="베리 전신 키링"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name">베리 전신 키링</strong>
+                    <span class="search-viewed__price">7,900원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-61.jpg"
+                      alt="코비&amp;베리 무릎담요+스티커 2종세트"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >코비&amp;베리 무릎담요+스티커 2종세트</strong
+                    >
+                    <span class="search-viewed__price">24,500원</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </aside>
+    <aside
+      class="search-drawer"
+      id="search-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="search-drawer-title"
+      aria-hidden="true"
+      inert
+      hidden
+    >
+      <div class="search-drawer__backdrop" aria-hidden="true"></div>
+      <div class="search-drawer__panel">
+        <header class="search-drawer__header">
+          <div class="search-drawer__top">
+            <h2 class="search-drawer__title" id="search-drawer-title">검색</h2>
+            <button
+              class="icon-button search-drawer__close"
+              type="button"
+              aria-label="검색창 닫기"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m5 5 14 14M19 5 5 19"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="search-drawer__bar">
+            <form
+              class="search-drawer__form"
+              role="search"
+              onsubmit="return false;"
+            >
+              <input
+                class="search-drawer__input"
+                type="search"
+                placeholder="검색어를 입력해주세요"
+                aria-label="검색어 입력"
+                autocomplete="off"
+              />
+              <button
+                class="search-drawer__submit"
+                type="button"
+                aria-label="검색하기"
+              >
+                <img src="../images/used/icon_search_b.svg" alt="" />
+              </button>
+            </form>
+          </div>
+        </header>
+        <div class="search-drawer__body">
+          <section
+            class="search-drawer__section search-recent"
+            aria-labelledby="search-recent-title"
+          >
+            <div class="search-drawer__section-header">
+              <h3 class="search-drawer__section-title" id="search-recent-title">
+                최근 검색어
+              </h3>
+              <button class="search-drawer__link-btn" type="button">
+                전체삭제
+              </button>
+            </div>
+            <div class="search-recent__empty">
+              <p>최근 검색어가 없습니다.</p>
+            </div>
+          </section>
+
+          <hr class="search-drawer__divider" aria-hidden="true" />
+
+          <section
+            class="search-drawer__section search-viewed"
+            aria-labelledby="search-viewed-title"
+          >
+            <div class="search-drawer__section-header">
+              <h3 class="search-drawer__section-title" id="search-viewed-title">
+                최근 본 상품
+              </h3>
+              <a class="search-drawer__link-btn" href="../index.html#best-products"
+                >더보기</a
+              >
+            </div>
+            <ul class="search-viewed__list">
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-15.jpg"
+                      alt="고양이 유치원 - story sticker no.01"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >고양이 유치원 - story sticker no.01</strong
+                    >
+                    <span class="search-viewed__price">3,500원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-75.jpg"
+                      alt="모먼트 고양이 반팔티셔츠 - 2 color"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >모먼트 고양이 반팔티셔츠 - 2 color</strong
+                    >
+                    <span class="search-viewed__price">28,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-56.jpg"
+                      alt="블라썸 고양이 반팔티셔츠"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >블라썸 고양이 반팔티셔츠</strong
+                    >
+                    <span class="search-viewed__price">26,000원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-17.jpg"
+                      alt="베리 얼굴 키링"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name">베리 얼굴 키링</strong>
+                    <span class="search-viewed__price">7,900원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-11.jpg"
+                      alt="베리 전신 키링"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name">베리 전신 키링</strong>
+                    <span class="search-viewed__price">7,900원</span>
+                  </div>
+                </a>
+              </li>
+              <li class="search-viewed__item">
+                <a class="search-viewed__card" href="../index.html#best-products">
+                  <div class="search-viewed__thumb">
+                    <img
+                      src="../images/img-dt/dayand-dt-61.jpg"
+                      alt="코비&amp;베리 무릎담요+스티커 2종세트"
+                    />
+                  </div>
+                  <div class="search-viewed__info">
+                    <strong class="search-viewed__name"
+                      >코비&amp;베리 무릎담요+스티커 2종세트</strong
+                    >
+                    <span class="search-viewed__price">24,500원</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </aside>
+    <script type="module" src="../js/footer.js"></script>
+    <script type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/cart-page.js"></script>
+  </body>
+</html>

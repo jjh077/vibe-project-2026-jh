@@ -1,3 +1,5 @@
+import "./cart.js";
+
 const hero = document.querySelector(".hero");
 const track = document.querySelector(".hero-track");
 const slides = [...document.querySelectorAll(".hero-slide")];

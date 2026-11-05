@@ -1,0 +1,60 @@
+{
+  "shipping": {
+    "fee": 2500,
+    "freeThreshold": 50000
+  },
+  "products": [
+    {
+      "id": "knee-blanket-sticker-set",
+      "name": "코비&베리 무릎담요+스티커 2종세트",
+      "price": 24500,
+      "image": "images/img-dt/dayand-dt-61.jpg",
+      "category": "굿즈"
+    },
+    {
+      "id": "blossom-cat-tee",
+      "name": "블라썸 고양이 반팔티셔츠",
+      "price": 26000,
+      "image": "images/img-dt/dayand-dt-56.jpg",
+      "category": "APPAREL"
+    },
+    {
+      "id": "moment-cat-tee",
+      "name": "모먼트 고양이 반팔티셔츠 - 2 color",
+      "price": 28000,
+      "image": "images/img-dt/dayand-dt-75.jpg",
+      "category": "APPAREL"
+    },
+    {
+      "id": "story-sticker-no01",
+      "name": "고양이 유치원 - story sticker no.01",
+      "price": 3500,
+      "image": "images/img-dt/dayand-dt-15.jpg",
+      "category": "굿즈",
+      "badge": "HIT"
+    },
+    {
+      "id": "story-sticker-no02",
+      "name": "고양이 가을이야기 - story sticker no.02",
+      "price": 3500,
+      "image": "",
+      "category": "굿즈",
+      "badge": "NEW",
+      "options": ["베리", "코비"]
+    },
+    {
+      "id": "berry-face-keyring",
+      "name": "베리 얼굴 키링",
+      "price": 7900,
+      "image": "images/img-dt/dayand-dt-17.jpg",
+      "category": "굿즈"
+    },
+    {
+      "id": "berry-body-keyring",
+      "name": "베리 전신 키링",
+      "price": 7900,
+      "image": "images/img-dt/dayand-dt-11.jpg",
+      "category": "굿즈"
+    }
+  ]
+}
