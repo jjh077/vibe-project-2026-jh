@@ -17,11 +17,10 @@ const quickMenu = document.querySelector(".quick-menu");
 const recentProductsButton = quickMenu?.querySelector('[data-action="recent"]');
 const topButton = quickMenu?.querySelector('[data-action="top"]');
 
+// 히어로 배너는 메인 페이지에만 존재 (공지사항 등 서브 페이지에서는 생략)
+const hasHero = Boolean(hero && track && previousButton && nextButton);
+
 if (
-  !hero ||
-  !track ||
-  !previousButton ||
-  !nextButton ||
   !menuToggle ||
   !mobileMenu ||
   !menuClose ||
@@ -34,7 +33,7 @@ if (
   throw new Error("필수 페이지 요소를 찾을 수 없습니다.");
 }
 
-if (slides.length !== 4 || indicators.length !== slides.length) {
+if (hasHero && (slides.length !== 4 || indicators.length !== slides.length)) {
   throw new Error("히어로 배너는 4개 슬라이드와 인디케이터가 필요합니다.");
 }
 
@@ -49,10 +48,10 @@ const mobileViewport = window.matchMedia("(max-width: 768px)");
 let previousScrollY = window.scrollY;
 
 const updateScrollState = () => {
-  if (!header || !hero || !quickMenu) return;
+  if (!header || !quickMenu) return;
 
   const scrollY = window.scrollY;
-  const isPastHero = scrollY >= hero.offsetTop + hero.offsetHeight;
+  const isPastHero = hero ? scrollY >= hero.offsetTop + hero.offsetHeight : true;
   const isScrollingDown = scrollY > previousScrollY;
   const shouldShowQuickMenu = scrollY > 0 && (!mobileViewport.matches || isPastHero);
 
@@ -81,131 +80,137 @@ topButton?.addEventListener("click", () => {
   });
 });
 
-const updateSlide = (nextIndex) => {
-  activeIndex = (nextIndex + slides.length) % slides.length;
-  track.style.transform = `translate3d(-${activeIndex * 100}%, 0, 0)`;
+// 히어로 배너가 있는 페이지(메인)에서만 동작
+if (hasHero) {
+  const updateSlide = (nextIndex) => {
+    activeIndex = (nextIndex + slides.length) % slides.length;
+    track.style.transform = `translate3d(-${activeIndex * 100}%, 0, 0)`;
 
-  slides.forEach((slide, index) => {
-    const isActive = index === activeIndex;
-    slide.setAttribute("aria-hidden", String(!isActive));
-    slide.inert = !isActive;
+    slides.forEach((slide, index) => {
+      const isActive = index === activeIndex;
+      slide.setAttribute("aria-hidden", String(!isActive));
+      slide.inert = !isActive;
+    });
+
+    indicators.forEach((indicator, index) => {
+      indicator.setAttribute("aria-pressed", String(index === activeIndex));
+    });
+  };
+
+  const stopAutoplay = () => {
+    window.clearInterval(autoplayTimer);
+    autoplayTimer = 0;
+  };
+
+  const startAutoplay = () => {
+    stopAutoplay();
+
+    if (
+      reducedMotion.matches ||
+      document.hidden ||
+      !heroIsVisible
+    ) {
+      return;
+    }
+
+    autoplayTimer = window.setInterval(() => {
+      updateSlide(activeIndex + 1);
+    }, 4000);
+  };
+
+  const showPrevious = () => updateSlide(activeIndex - 1);
+  const showNext = () => updateSlide(activeIndex + 1);
+
+  previousButton.addEventListener("click", () => {
+    showPrevious();
+    startAutoplay();
+  });
+
+  nextButton.addEventListener("click", () => {
+    showNext();
+    startAutoplay();
   });
 
   indicators.forEach((indicator, index) => {
-    indicator.setAttribute("aria-pressed", String(index === activeIndex));
-  });
-};
-
-const stopAutoplay = () => {
-  window.clearInterval(autoplayTimer);
-  autoplayTimer = 0;
-};
-
-const startAutoplay = () => {
-  stopAutoplay();
-
-  if (
-    reducedMotion.matches ||
-    document.hidden ||
-    !heroIsVisible
-  ) {
-    return;
-  }
-
-  autoplayTimer = window.setInterval(() => {
-    updateSlide(activeIndex + 1);
-  }, 4000);
-};
-
-const showPrevious = () => updateSlide(activeIndex - 1);
-const showNext = () => updateSlide(activeIndex + 1);
-
-previousButton.addEventListener("click", () => {
-  showPrevious();
-  startAutoplay();
-});
-
-nextButton.addEventListener("click", () => {
-  showNext();
-  startAutoplay();
-});
-
-indicators.forEach((indicator, index) => {
-  indicator.addEventListener("click", () => {
-    updateSlide(index);
-    startAutoplay();
-  });
-});
-
-hero.addEventListener("keydown", (event) => {
-  if (event.target.closest("button, a")) {
-    return;
-  }
-
-  if (event.key === "ArrowLeft") {
-    showPrevious();
-    startAutoplay();
-  }
-
-  if (event.key === "ArrowRight") {
-    showNext();
-    startAutoplay();
-  }
-});
-
-track.addEventListener("pointerdown", (event) => {
-  if (!event.isPrimary) {
-    return;
-  }
-
-  pointerStartX = event.clientX;
-  track.setPointerCapture(event.pointerId);
-});
-
-track.addEventListener("pointerup", (event) => {
-  if (pointerStartX === null) {
-    return;
-  }
-
-  const swipeDistance = event.clientX - pointerStartX;
-  pointerStartX = null;
-
-  if (Math.abs(swipeDistance) < 40) {
-    return;
-  }
-
-  if (swipeDistance < 0) {
-    showNext();
-  } else {
-    showPrevious();
-  }
-
-  startAutoplay();
-});
-
-track.addEventListener("pointercancel", () => {
-  pointerStartX = null;
-});
-
-document.addEventListener("visibilitychange", startAutoplay);
-reducedMotion.addEventListener("change", () => {
-  startAutoplay();
-});
-
-if ("IntersectionObserver" in window) {
-  heroIsVisible = false;
-  const heroObserver = new IntersectionObserver(([entry]) => {
-    heroIsVisible = entry.isIntersecting;
-
-    if (heroIsVisible) {
+    indicator.addEventListener("click", () => {
+      updateSlide(index);
       startAutoplay();
-    } else {
-      stopAutoplay();
+    });
+  });
+
+  hero.addEventListener("keydown", (event) => {
+    if (event.target.closest("button, a")) {
+      return;
+    }
+
+    if (event.key === "ArrowLeft") {
+      showPrevious();
+      startAutoplay();
+    }
+
+    if (event.key === "ArrowRight") {
+      showNext();
+      startAutoplay();
     }
   });
 
-  heroObserver.observe(hero);
-} else {
+  track.addEventListener("pointerdown", (event) => {
+    if (!event.isPrimary) {
+      return;
+    }
+
+    pointerStartX = event.clientX;
+    track.setPointerCapture(event.pointerId);
+  });
+
+  track.addEventListener("pointerup", (event) => {
+    if (pointerStartX === null) {
+      return;
+    }
+
+    const swipeDistance = event.clientX - pointerStartX;
+    pointerStartX = null;
+
+    if (Math.abs(swipeDistance) < 40) {
+      return;
+    }
+
+    if (swipeDistance < 0) {
+      showNext();
+    } else {
+      showPrevious();
+    }
+
+    startAutoplay();
+  });
+
+  track.addEventListener("pointercancel", () => {
+    pointerStartX = null;
+  });
+
+  document.addEventListener("visibilitychange", startAutoplay);
+  reducedMotion.addEventListener("change", () => {
+    startAutoplay();
+  });
+
+  if ("IntersectionObserver" in window) {
+    heroIsVisible = false;
+    const heroObserver = new IntersectionObserver(([entry]) => {
+      heroIsVisible = entry.isIntersecting;
+
+      if (heroIsVisible) {
+        startAutoplay();
+      } else {
+        stopAutoplay();
+      }
+    });
+
+    heroObserver.observe(hero);
+  } else {
+    startAutoplay();
+  }
+
+  updateSlide(0);
   startAutoplay();
 }
 
@@ -316,8 +321,6 @@ mobileViewport.addEventListener("change", (event) => {
   }
 });
 
-updateSlide(0);
-startAutoplay();
 
 
 
