@@ -201,7 +201,7 @@ if (footer) {
     });
   };
 
-  fetch("data/footer.json")
+  fetch(new URL("../data/footer.json", import.meta.url))
     .then((response) => {
       if (!response.ok) {
         throw new Error("푸터 정보를 불러오지 못했습니다.");

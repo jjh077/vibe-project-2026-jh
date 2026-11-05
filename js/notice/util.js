@@ -56,17 +56,12 @@ export const isNew = (iso, now = Date.now()) => {
 
 /* ---------- 해시 라우팅 ---------- */
 
-/** "#/notice/view/abc?x=1" -> { isNotice: true, path: ["view","abc"], query } */
+/** "#/view/abc?x=1" -> { path: ["view","abc"], query } */
 export const parseHash = () => {
-  const raw = window.location.hash.replace(/^#/, "");
+  const raw = window.location.hash.replace(/^#/, "") || "/";
   const [pathPart, queryPart = ""] = raw.split("?");
   const parts = pathPart.split("/").filter(Boolean).map(decodeURIComponent);
-  const isNotice = parts[0] === "notice";
-  return {
-    isNotice,
-    path: isNotice ? parts.slice(1) : parts,
-    query: new URLSearchParams(queryPart),
-  };
+  return { path: parts, query: new URLSearchParams(queryPart) };
 };
 
 export const hrefs = {
@@ -77,11 +72,11 @@ export const hrefs = {
     if (state.keyword && state.searchType && state.searchType !== "all") q.set("type", state.searchType);
     if (state.page && state.page > 1) q.set("page", String(state.page));
     const s = q.toString();
-    return `#/notice${s ? `?${s}` : ""}`;
+    return `#/${s ? `?${s}` : ""}`;
   },
-  view: (id) => `#/notice/view/${encodeURIComponent(id)}`,
-  write: () => "#/notice/write",
-  edit: (id) => `#/notice/edit/${encodeURIComponent(id)}`,
+  view: (id) => `#/view/${encodeURIComponent(id)}`,
+  write: () => "#/write",
+  edit: (id) => `#/edit/${encodeURIComponent(id)}`,
 };
 
 /** 로딩 / 오류 / 빈 상태 공용 블록 */

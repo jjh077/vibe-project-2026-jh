@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet" href="css/notice.css" />
+    <link rel="stylesheet" href="css/notice-bar.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css"
@@ -23,13 +23,15 @@
   </head>
 
   <body>
+    <div class="notice-bar" id="notice-bar" hidden></div>
+
     <header class="outer-box outer-box--header">
       <div class="inner-box header__inner">
         <div class="part-box header__desktop">
           <nav class="part-box header__desktop-menu" aria-label="주요 메뉴">
             <a href="#best-products">APPAREL</a>
             <a href="#best-products">굿즈</a>
-            <a href="#/notice">커뮤니티</a>
+            <a href="pages/notice.html">커뮤니티</a>
           </nav>
 
           <a class="brand-logo" href="#" aria-label="그루밍데이 홈"
@@ -136,7 +138,7 @@
             >
               <a href="#best-products">APPAREL</a>
               <a href="#best-products">굿즈</a>
-              <a class="header__mobile-extra" href="#/notice" hidden
+              <a class="header__mobile-extra" href="pages/notice.html" hidden
                 >커뮤니티</a
               >
             </nav>
@@ -154,7 +156,7 @@
       </div>
     </header>
 
-    <main id="home-page">
+    <main>
       <section
         class="outer-box outer-box--bleed hero"
         aria-label="메인 배너"
@@ -310,11 +312,7 @@
               ></ul>
             </div>
           </div>
-          <p
-            class="best-products__status"
-            id="best-products-status"
-            aria-live="polite"
-          ></p>
+          <p class="best-products__status" id="best-products-status" aria-live="polite"></p>
           <div class="best-products__more">
             <button
               class="more-button"
@@ -457,21 +455,7 @@
         </div>
       </section>
     </main>
-    <!-- 공지사항 게시판: #/notice 해시일 때만 표시 (js/notice/app.js 가 제어) -->
-    <main class="notice-page" id="notice-page" hidden>
-      <div class="notice-heading">
-        <h1 class="notice-heading__title">NOTICE</h1>
-        <p class="notice-heading__desc">
-          그루밍데이의 새로운 소식과 안내사항입니다.
-        </p>
-      </div>
-      <div class="notice-root" id="notice-root" aria-live="polite"></div>
-    </main>
-    <footer
-      class="site-footer"
-      id="site-footer"
-      aria-label="사이트 정보"
-    ></footer>
+    <footer class="site-footer" id="site-footer" aria-label="사이트 정보"></footer>
     <aside class="quick-menu" aria-label="빠른 메뉴" aria-hidden="true" inert>
       <a
         class="quick-menu__button quick-menu__button--kakao"
@@ -556,8 +540,8 @@
               id="mobile-community-links"
               hidden
             >
-              <a href="#/notice">공지사항</a>
-              <a href="#/notice?cat=%EC%9D%B4%EB%B2%A4%ED%8A%B8">이벤트</a>
+              <a href="pages/notice.html">공지사항</a>
+              <a href="pages/notice.html#/?cat=%EC%9D%B4%EB%B2%A4%ED%8A%B8">이벤트</a>
               <a href="#best-products">고객 후기</a>
             </div>
           </div>
@@ -951,7 +935,7 @@
     <script type="module" src="js/best-products.js"></script>
     <script type="module" src="js/footer.js"></script>
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/notice-bar.js"></script>
     <script type="module" src="js/photo-review.js"></script>
-    <script type="module" src="js/notice/app.js"></script>
   </body>
 </html>
