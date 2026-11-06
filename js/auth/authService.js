@@ -62,7 +62,10 @@ export async function createAccount({ name, username, email, password }) {
         throw new Error("auth/username-already-in-use");
       }
 
-      transaction.set(usernameRef, { uid: credential.user.uid });
+      transaction.set(usernameRef, {
+        uid: credential.user.uid,
+        email: credential.user.email,
+      });
       transaction.set(doc(db, "users", credential.user.uid), {
         name: name.trim(),
         username: normalizedUsername,
@@ -78,8 +81,17 @@ export async function createAccount({ name, username, email, password }) {
   }
 }
 
-export async function signIn(email, password) {
-  const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
+export async function signIn(username, password) {
+  const normalizedUsername = username.trim().toLowerCase();
+  if (!/^[a-z0-9_]{4,20}$/.test(normalizedUsername)) {
+    throw new Error("auth/username-not-found");
+  }
+
+  const usernameSnapshot = await getDoc(doc(db, "usernames", normalizedUsername));
+  const email = usernameSnapshot.exists() ? usernameSnapshot.data().email : "";
+  if (!email) throw new Error("auth/username-email-unavailable");
+
+  const credential = await signInWithEmailAndPassword(auth, email, password);
   activeUser = credential.user;
   return credential.user;
 }
@@ -92,9 +104,11 @@ export async function signOutCurrentUser() {
 export const authErrors = {
   "auth/email-already-in-use": "이메일이 이미 사용 중입니다.",
   "auth/invalid-email": "이메일 주소를 확인해 주세요.",
-  "auth/invalid-credential": "이메일 또는 비밀번호가 올바르지 않습니다.",
+  "auth/invalid-credential": "아이디 또는 비밀번호가 올바르지 않습니다.",
   "auth/weak-password": "비밀번호는 6자 이상으로 입력해 주세요.",
   "auth/username-already-in-use": "이미 사용 중인 아이디입니다.",
+  "auth/username-not-found": "아이디 또는 비밀번호가 올바르지 않습니다.",
+  "auth/username-email-unavailable": "아이디 로그인 정보가 없습니다. 관리자에게 계정 정보 업데이트를 요청해 주세요.",
   "auth/username-reserved": "관리자 전용 아이디입니다. 다른 아이디를 입력해 주세요.",
   "auth/network-request-failed": "네트워크 연결을 확인한 뒤 다시 시도해 주세요.",
 };

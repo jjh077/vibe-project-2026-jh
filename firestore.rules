@@ -23,8 +23,10 @@ service cloud.firestore {
       allow get: if true;
       allow list: if false;
       allow create: if signedIn()
-        && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.keys().hasOnly(['uid', 'email'])
         && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email is string
+        && request.resource.data.email == request.auth.token.email
         && username != 'admin'
         && getAfter(/databases/$(database)/documents/users/$(request.auth.uid)).data.username == username;
       allow update, delete: if false;

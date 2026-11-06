@@ -114,6 +114,27 @@
   opacity: 0.65;
 }
 
+.auth-username-control {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-2);
+}
+
+.auth-username-control .notice-input {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.auth-username-check {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.auth-username-check:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
 @media (max-width: 768px) {
   .auth-page {
     padding-top: calc(var(--space-header-mobile) + var(--auth-panels-gap));

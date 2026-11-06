@@ -8,7 +8,7 @@ loginForm?.addEventListener("submit", async (event) => {
   const output = loginForm.querySelector("[data-form-message]");
   button.disabled = true;
   try {
-    await signIn(loginForm.elements.email.value, loginForm.elements.password.value);
+    await signIn(loginForm.elements.username.value, loginForm.elements.password.value);
     const next = new URLSearchParams(window.location.search).get("next");
     const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : "notice.html";
     window.location.assign(safeNext);
