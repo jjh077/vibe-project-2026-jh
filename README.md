@@ -20,7 +20,7 @@
 
 ## 공통 화면 모듈
 
-- 공통 상단 헤더는 `components/site-header.html`, 모바일 메뉴·검색창·퀵 메뉴는 `components/site-overlays.html`에서 관리합니다.
+- 공통 상단 헤더, 모바일 메뉴·검색창·퀵 메뉴 마크업은 `js/shared-shell-templates.js`에서 관리합니다.
 - `js/shared-layout.js`가 공통 템플릿을 각 페이지의 `<main>` 앞뒤와 문서 끝에 삽입합니다. 각 페이지 HTML에는 헤더·푸터·오버레이 마크업을 복사하지 않습니다.
 - 푸터의 데이터 렌더링은 `js/footer.js`에서 관리하며, 내용 데이터는 `data/footer.json`을 사용합니다.
 - 공통 화면을 수정할 때 페이지별 HTML 대신 해당 공통 템플릿과 연결 스타일·스크립트를 수정합니다.

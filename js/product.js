@@ -81,12 +81,12 @@ const loadProduct = async () => {
   return merged;
 };
 
-/** 옵션 종류 판별: variants(의류 드롭다운) / options(2종 버튼) / none(단일 상품) */
+/** 옵션 종류 판별: variants / options / none(단일 상품) */
 const getOptionType = (product) => {
   if (Array.isArray(product.variants) && product.variants.length > 0)
     return "variants";
   if (Array.isArray(product.options) && product.options.length > 0)
-    return "buttons";
+    return "options";
   if (APPAREL_RE.test(product.name || "")) {
     // 상품별 옵션 데이터가 없는 의류는 기본 사이즈 옵션을 자동 생성
     product.variants = ["S", "M", "L", "XL", "2XL"].map((size) => ({
@@ -127,7 +127,28 @@ const getShippingNotice = () => {
 const render = (product) => {
   const optionType = getOptionType(product);
   const hasOptions = optionType !== "none";
-  // 선택된 항목: [{ option, price, qty, sameDay }]  (옵션별 가격이 다를 수 있음)
+  const optionItems =
+    optionType === "variants"
+      ? product.variants.map((variant) => ({
+          label: variant.label,
+          price: variant.price,
+          sameDay: Boolean(variant.sameDay),
+          dim: Boolean(variant.dim),
+          soldOut: Boolean(variant.soldOut),
+        }))
+      : optionType === "options"
+        ? product.options.map((option) => {
+            const item = typeof option === "string" ? { name: option } : option;
+            return {
+              label: item.label || item.name || item.value || "",
+              price: item.price ?? product.price,
+              sameDay: Boolean(item.sameDay),
+              dim: Boolean(item.dim),
+              soldOut: Boolean(item.soldOut),
+            };
+          })
+        : [];
+  // 선택된 항목: [{ option, price, qty, sameDay }]
   let selected = hasOptions
     ? []
     : [{ option: "", price: product.price, qty: 1 }];
@@ -238,62 +259,26 @@ const render = (product) => {
   addRow("무이자 할부", "카드사별 무이자 혜택");
 
   /* 옵션 */
-  let optionHint = null;
   const selectedList = el("ul", "product-selected");
 
   const addSelected = (entry) => {
     if (!selected.some((s) => s.option === entry.option)) {
       selected.push({ qty: 1, ...entry });
     }
-    optionHint?.classList.remove("is-error");
     selectToggle?.classList.remove("is-error");
-    if (optionHint) optionHint.textContent = `[필수] ${entry.option}`;
-    const selectLabel = selectToggle?.querySelector(".product-select__label");
-    if (selectLabel) selectLabel.textContent = entry.option;
     renderSelected();
   };
 
   let selectToggle = null;
 
-  if (optionType === "buttons") {
-    /* 2종 상품: 버튼형 옵션 (품절 옵션은 사선 표시 + 선택 불가) */
-    const optionBox = el("div", "product-option");
-    const optionButtons = el("div", "product-option__buttons");
-    product.options.forEach((opt) => {
-      const name = typeof opt === "string" ? opt : opt.name;
-      const soldOut = typeof opt === "object" && opt.soldOut;
-      const btn = el("button", "product-option__btn", name);
-      btn.type = "button";
-      if (soldOut) {
-        btn.disabled = true;
-        btn.classList.add("is-soldout");
-        btn.setAttribute("aria-label", `${name} (품절)`);
-      } else {
-        btn.addEventListener("click", () => {
-          addSelected({ option: name, price: product.price });
-          optionButtons
-            .querySelectorAll(".product-option__btn")
-            .forEach((b) => b.classList.toggle("is-selected", b === btn));
-        });
-      }
-      optionButtons.append(btn);
-    });
-    optionHint = el("p", "product-option__hint", "[필수] 옵션을 선택해 주세요");
-    optionBox.append(optionButtons, optionHint);
-    const dd = el("dd");
-    dd.append(optionBox);
-    table.append(el("dt", "", "옵션"), dd);
-  }
-
-  if (optionType === "variants") {
-    /* 의류: 드롭다운 (색상 - 사이즈 + 당일배송 표시 + 옵션별 가격) */
+  if (hasOptions) {
     const select = el("div", "product-select");
     selectToggle = el("button", "product-select__toggle");
     selectToggle.type = "button";
     selectToggle.setAttribute("aria-haspopup", "listbox");
     selectToggle.setAttribute("aria-expanded", "false");
     selectToggle.append(
-      el("span", "product-select__label", "- [필수] 옵션을 선택해 주세요 -"),
+      el("span", "product-select__label", "[필수] 옵션을 선택해 주세요"),
     );
     selectToggle.insertAdjacentHTML(
       "beforeend",
@@ -313,25 +298,34 @@ const render = (product) => {
       selectToggle.setAttribute("aria-expanded", "true");
     };
 
-    product.variants.forEach((variant) => {
+    optionItems.forEach((item) => {
       const li = el("li");
-      li.setAttribute("role", "option");
       const btn = el("button", "product-select__item");
       btn.type = "button";
-      if (variant.dim) btn.classList.add("is-dim");
-      const label = el("span", "product-select__name", variant.label);
-      if (variant.sameDay) {
+      btn.setAttribute("role", "option");
+      btn.setAttribute("aria-selected", "false");
+      btn.dataset.option = item.label;
+      if (item.dim) btn.classList.add("is-dim");
+      const label = el("span", "product-select__name", item.label);
+      if (item.sameDay) {
         label.append(document.createTextNode(" (★당일배송)"));
       }
-      btn.append(label, el("span", "product-select__price", formatPrice(variant.price)));
-      btn.addEventListener("click", () => {
-        addSelected({
-          option: variant.label,
-          price: variant.price,
-          sameDay: Boolean(variant.sameDay),
+      btn.append(label, el("span", "product-select__price", formatPrice(item.price)));
+      if (item.soldOut) {
+        btn.disabled = true;
+        btn.setAttribute("aria-label", `${item.label} (품절)`);
+      } else {
+        btn.addEventListener("click", () => {
+          addSelected({
+            option: item.label,
+            price: item.price,
+            sameDay: item.sameDay,
+          });
+          btn.classList.add("is-selected");
+          btn.setAttribute("aria-selected", "true");
+          closeList();
         });
-        closeList();
-      });
+      }
       li.append(btn);
       list.append(li);
     });
@@ -351,8 +345,7 @@ const render = (product) => {
 
     select.append(selectToggle, list);
     const dd = el("dd");
-    optionHint = el("p", "product-option__hint", "[필수] 옵션을 선택해 주세요");
-    dd.append(select, optionHint);
+    dd.append(select);
     table.append(el("dt", "", "옵션"), dd);
   }
 
@@ -433,13 +426,14 @@ const render = (product) => {
   /* ---------- 선택 항목 렌더 ---------- */
   function renderSelected() {
     selectedList.textContent = "";
+    selectedList.hidden = selected.length === 0;
 
     selected.forEach((item) => {
       const li = el("li", "product-selected__item");
       const name = el(
         "span",
         "product-selected__name",
-        item.option ? `${product.name} - ${item.option}` : product.name,
+        hasOptions ? item.option : product.name,
       );
 
       const stepper = el("div", "qty-stepper");
@@ -475,35 +469,26 @@ const render = (product) => {
       const heading = el("div", "product-selected__heading");
       heading.append(name);
 
-      if (selected.length > 1) {
+      if (hasOptions) {
         const remove = el("button", "product-selected__remove", "×");
         remove.type = "button";
         remove.setAttribute("aria-label", `${item.option} 옵션 삭제`);
         remove.addEventListener("click", () => {
           selected = selected.filter((s) => s !== item);
-          if (optionHint) {
-            optionHint.textContent = selected.length
-              ? `[필수] ${selected[selected.length - 1].option || "옵션"}`
-              : "[필수] 옵션을 선택해 주세요";
-          }
-          if (selectToggle) {
-            selectToggle.querySelector(".product-select__label").textContent =
-              selected.length
-                ? selected[selected.length - 1].option
-                : "- [필수] 옵션을 선택해 주세요 -";
-          }
-          document.querySelectorAll(".product-option__btn").forEach((button) => {
-            button.classList.toggle(
-              "is-selected",
-              selected.some((entry) => entry.option === button.textContent),
-            );
-          });
+          selectToggle?.parentElement
+            .querySelectorAll(".product-select__item")
+            .forEach((button) => {
+              const isSelected = selected.some(
+                (entry) => entry.option === button.dataset.option,
+              );
+              button.classList.toggle("is-selected", isSelected);
+              button.setAttribute("aria-selected", String(isSelected));
+            });
           renderSelected();
         });
         heading.append(remove);
       }
 
-      if (hasOptions) name.textContent = item.option || product.name;
       const details = el("div", "product-selected__details");
       details.append(stepper, price2);
       li.append(heading, details);
@@ -538,9 +523,8 @@ const render = (product) => {
   /* ---------- 장바구니 담기 ---------- */
   cartBtn.addEventListener("click", () => {
     if (selected.length === 0) {
-      optionHint?.classList.add("is-error");
       selectToggle?.classList.add("is-error");
-      (optionHint || selectToggle)?.scrollIntoView({
+      selectToggle?.scrollIntoView({
         block: "center",
         behavior: "smooth",
       });

@@ -20,6 +20,43 @@
   --notice-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
+.qna-row-link { flex-wrap: wrap; }
+.qna-row-link .row-title { flex: 1 1 55%; }
+.qna-answered {
+  flex: none;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-sm);
+  background: var(--notice-brown-soft);
+  color: var(--notice-brown);
+  font-size: 0.6875rem;
+  font-weight: var(--font-weight-bold);
+}
+.qna-private {
+  display: block;
+  margin: -0.25rem 0 0 0.45rem;
+  color: var(--notice-muted);
+  font-size: 0.6875rem;
+}
+.qna-private-tag { color: var(--notice-muted); font-size: 0.75rem; }
+.qna-help { color: var(--notice-muted); font-size: 0.75rem; }
+.qna-table .col-no { width: 5.2rem; }
+.qna-table .col-author { width: 8.5rem; }
+.qna-table .col-date { width: 7.5rem; }
+.qna-answers {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--notice-border);
+  border-radius: var(--notice-radius);
+  background: var(--notice-surface);
+}
+.qna-answers h3 { margin: 0 0 1rem; font-size: 1rem; }
+.qna-answer { padding: 1rem 0; border-top: 1px solid var(--notice-border); }
+.qna-answer__meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--notice-muted); font-size: 0.75rem; }
+.qna-answer__meta strong { color: var(--notice-brown); }
+.qna-answer p { margin: 0.75rem 0 0; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+.qna-answer-form { display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; margin-top: 1rem; }
+.qna-answer-form textarea { width: 100%; }
+
 .notice-page .mono {
   font-family: var(--notice-mono);
   letter-spacing: -0.01em;

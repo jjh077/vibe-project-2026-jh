@@ -46,7 +46,7 @@ document.querySelectorAll(".header__desktop").forEach((desktop) => {
     community.setAttribute("aria-haspopup", "true");
     community.setAttribute("aria-label", "커뮤니티 메뉴");
     const links = makeMenu("header-dropdown__menu--community", "커뮤니티 하위 메뉴", [
-      { text: "Q&A" },
+      { text: "Q&A", href: pageUrl("pages/qna.html") },
       { text: "REVIEW", href: sectionUrl("photo-review") },
       { text: "EVENT", href: sectionUrl("video-story") },
       { text: "자주묻는질문" },

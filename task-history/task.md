@@ -149,7 +149,24 @@
 
 ## 최근 작업: 공통 헤더·푸터 모듈화
 
-- `components/site-header.html`, `components/site-overlays.html`, `js/shared-layout.js`를 추가해 데스크톱/모바일 헤더, 퀵 메뉴, 모바일 메뉴, 검색 드로어를 한곳에서 관리하고 각 페이지의 `<main>` 주변에 공통 주입하도록 변경했다.
+- `js/shared-shell-templates.js`, `js/shared-layout.js`를 추가해 데스크톱/모바일 헤더, 퀵 메뉴, 모바일 메뉴, 검색 드로어를 한곳에서 관리하고 각 페이지의 `<main>` 주변에 공통 주입하도록 변경했다.
 - `pages/*.html`, `index.html`에서 중복 헤더/푸터/오버레이 마크업을 제거했다. `js/footer.js`의 `data/footer.json` 기반 렌더링을 공통 레이아웃 초기화와 연결했고, 로그인/회원가입에도 공통 헤더·푸터·메뉴를 적용했다.
 - `js/main.js`, `js/cart.js`, `js/footer.js`, `js/auth/auth-ui.js`, `js/notice/app.js`가 공통 레이아웃 준비 후 DOM을 조회하도록 연결했다. README에 공통 화면 관리 위치를 안내했다.
 - 페이지별 마운트/중복 마크업 여부와 참조 경로를 정적으로 확인했다. 브라우저 화면 및 메뉴 동작은 검증하지 않았다.
+- 사용자가 메인 페이지 표시 이상을 보고해 공통 HTML 파일 `fetch()` 의존을 제거하고 템플릿을 동기 import 가능한 JavaScript 모듈로 옮겼다. 브라우저 접근 호스트가 unavailable 상태라 실제 화면은 재확인하지 못했다.
+
+## 최근 작업: 상품 옵션 선택 카드 삭제 동작
+
+- `js/product.js`: `variants`와 `options` 모두 같은 드롭다운 UI로 렌더링한다. 기본 셀렉트 문구를 `[필수] 옵션을 선택해 주세요`로 고정하고, 별도 옵션 안내 문단은 제거해 카드에 중복 문구가 들어가지 않게 했다.
+- 선택한 옵션은 드롭다운 바로 아래 선택 카드로 표시한다. 옵션 상품 카드는 항목이 하나만 있어도 삭제 버튼을 제공하고, 옵션이 없는 단일 상품은 상품명·수량·가격만 표시한다.
+- `css/shop.css`: 사용하지 않는 버튼형 옵션 스타일을 제거하고 드롭다운 선택 상태 스타일을 적용했다.
+- 정적 소스 확인만 수행했으며 브라우저 인터랙션은 확인하지 않았다.
+
+## 최근 작업: Firebase 묻고답하기 게시판
+
+- `pages/qna.html`, `js/qna/app.js`, `js/qna/qnaService.js`: 공지사항과 같은 스타일을 재사용하는 Q&A 게시판을 추가했다. 질문 유형 5종, 로그인 회원 질문 작성, 작성자 본인 글 수정·삭제, 관리자 답변 작성, 답변 목록을 구현했다.
+- `questions/{id}`에는 공개 목록용 메타데이터만 저장하고 질문 본문은 `questionContents/{id}`에 분리했다. 답변은 `questions/{id}/answers/{answerId}`에 저장한다. 비공개 질문도 제목과 비공개 표시는 목록에 보이지만, 질문 본문과 답변은 Firestore 규칙에서 작성자와 관리자만 읽을 수 있다.
+- 목록에서 답변이 있는 글은 제목 앞에 “답변완료”로 표시하고, 비공개 글에는 제목 바로 아래 비공개 표기를 추가했다. 관리자만 상세에서 답변을 등록할 수 있다.
+- `js/shared-layout.js`, `js/header-dropdowns.js`, `js/shared-shell-templates.js`: 데스크톱 커뮤니티 Q&A와 모바일 커뮤니티 하위 메뉴를 새 게시판으로 연결했다.
+- `firestore.rules`: 질문/본문/답변의 읽기·작성·수정·삭제 권한을 추가했다. 이 규칙을 실제 Firebase 프로젝트에도 게시해야 권한 제한이 적용된다.
+- Firebase 실계정/브라우저 확인은 수행하지 않았다. 기존 로그인 사용자의 `users/{uid}.role == "admin"`을 관리자 판별에 사용한다.

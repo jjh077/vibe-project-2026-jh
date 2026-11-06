@@ -11,12 +11,79 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
 
+    function ownsQuestion(questionId) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/questions/$(questionId))
+        && get(/databases/$(database)/documents/questions/$(questionId)).data.authorUid == request.auth.uid;
+    }
+
+    function canReadQuestion(questionId) {
+      return signedIn() && (isAdmin() || ownsQuestion(questionId))
+        || get(/databases/$(database)/documents/questions/$(questionId)).data.isPrivate == false;
+    }
+
+    function validQuestion(data) {
+      return data.keys().hasOnly(['title', 'category', 'authorUid', 'authorName', 'isPrivate', 'answerCount', 'createdAt', 'updatedAt'])
+        && data.title is string && data.title.size() > 0 && data.title.size() <= 100
+        && data.category in ['배송문의', '계정문의', '교환/환불', '시스템오류', '기타']
+        && data.authorUid is string && data.authorName is string
+        && data.isPrivate is bool && data.answerCount is int
+        && data.createdAt is string && data.updatedAt is string;
+    }
+
     match /notices/{noticeId} {
       allow read: if true;
       allow create, delete: if isAdmin();
       allow update: if isAdmin()
         || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])
           && request.resource.data.views == resource.data.views + 1);
+    }
+
+    match /questions/{questionId} {
+      allow get, list: if true;
+      allow create: if signedIn() && validQuestion(request.resource.data)
+        && request.resource.data.authorUid == request.auth.uid
+        && request.resource.data.answerCount == 0
+        && getAfter(/databases/$(database)/documents/questionContents/$(questionId)).data.authorUid == request.auth.uid;
+      allow update: if signedIn() && (
+        (resource.data.authorUid == request.auth.uid
+          && request.resource.data.authorUid == resource.data.authorUid
+          && request.resource.data.answerCount == resource.data.answerCount
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['title', 'category', 'isPrivate', 'updatedAt'])
+          && validQuestion(request.resource.data))
+        || (isAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['answerCount', 'updatedAt'])
+          && request.resource.data.answerCount == resource.data.answerCount + 1));
+      allow delete: if signedIn() && (resource.data.authorUid == request.auth.uid || isAdmin());
+
+      match /answers/{answerId} {
+        allow read: if canReadQuestion(questionId);
+        allow create: if isAdmin()
+          && request.resource.data.keys().hasOnly(['body', 'adminUid', 'adminName', 'createdAt'])
+          && request.resource.data.body is string && request.resource.data.body.size() > 0
+          && request.resource.data.body.size() <= 5000
+          && request.resource.data.adminUid == request.auth.uid
+          && request.resource.data.adminName is string && request.resource.data.createdAt is string;
+        allow update: if false;
+        allow delete: if isAdmin() || ownsQuestion(questionId);
+      }
+    }
+
+    match /questionContents/{questionId} {
+      allow get: if canReadQuestion(questionId);
+      allow list: if false;
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['body', 'authorUid', 'updatedAt'])
+        && request.resource.data.body is string && request.resource.data.body.size() > 0
+        && request.resource.data.body.size() <= 5000
+        && request.resource.data.authorUid == request.auth.uid
+        && getAfter(/databases/$(database)/documents/questions/$(questionId)).data.authorUid == request.auth.uid;
+      allow update: if ownsQuestion(questionId)
+        && request.resource.data.keys().hasOnly(['body', 'authorUid', 'updatedAt'])
+        && request.resource.data.authorUid == resource.data.authorUid
+        && request.resource.data.body is string && request.resource.data.body.size() > 0
+        && request.resource.data.body.size() <= 5000;
+      allow delete: if ownsQuestion(questionId) || isAdmin();
     }
 
     match /usernames/{username} {

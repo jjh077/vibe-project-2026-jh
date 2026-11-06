@@ -246,31 +246,6 @@
 .product-info__table dt { color: var(--shop-muted); }
 .product-info__table dd { margin: 0; color: #444; }
 
-.product-option__buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.product-option__btn {
-  min-width: 52px;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid var(--shop-line);
-  background: #fff;
-  font-size: 0.8125rem;
-  cursor: pointer;
-}
-
-.product-option__btn:hover { border-color: #111; }
-
-.product-option__hint {
-  margin: 0.9rem 0 0;
-  font-size: 0.8125rem;
-  color: #444;
-}
-
-.product-option__hint.is-error { color: #d6455d; font-weight: 600; }
-
 .product-selected {
   display: grid;
   gap: 8px;
@@ -278,6 +253,8 @@
   padding: 0;
   list-style: none;
 }
+
+.product-selected[hidden] { display: none; }
 
 .product-selected__item {
   display: grid;
@@ -708,18 +685,7 @@
 
 .product-info__name { margin-top: 1rem; }
 
-/* 옵션: 2종 상품 버튼 (품절은 사선) */
-.product-option__btn { min-width: 52px; height: 36px; padding: 0 1rem; color: #111; }
-.product-option__btn.is-selected { border-color: #111; }
-.product-option__btn.is-soldout {
-  position: relative;
-  border-color: #e5e5e5;
-  color: #b5b5b5;
-  background: linear-gradient(to top right, transparent calc(50% - 0.5px), #cfcfcf calc(50% - 0.5px), #cfcfcf calc(50% + 0.5px), transparent calc(50% + 0.5px)), #fff;
-  cursor: not-allowed;
-}
-
-/* 옵션: 의류 드롭다운 (색상 - 사이즈  가격) */
+/* 공통 상품 옵션 드롭다운 */
 .product-select { position: relative; }
 
 .product-select__toggle {
@@ -785,7 +751,7 @@
   cursor: pointer;
 }
 
-.product-select__item:hover { background: #f7f7f7; }
+.product-select__item:is(:hover, .is-selected) { background: #f7f7f7; }
 .product-select__item.is-dim .product-select__name { color: #8a8a8a; }
 .product-select__price { color: var(--shop-brown); }
 
