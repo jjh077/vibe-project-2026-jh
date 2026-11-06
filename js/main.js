@@ -1,3 +1,4 @@
+import "./shared-layout.js";
 import "./cart.js";
 import "./header-dropdowns.js";
 

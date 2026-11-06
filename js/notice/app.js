@@ -8,6 +8,8 @@ import { renderListView } from "./views/listView.js";
 import { renderDetailView } from "./views/detailView.js";
 import { renderFormView } from "./views/formView.js";
 
+import "../shared-layout.js";
+
 const root = document.getElementById("notice-root");
 const BASE_TITLE = "공지사항 | 그루밍데이";
 

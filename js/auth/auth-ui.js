@@ -1,3 +1,4 @@
+import "../shared-layout.js";
 import { getCurrentProfile, signOutCurrentUser } from "./authService.js";
 import { auth } from "../notice/firebase/firebaseConfig.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";

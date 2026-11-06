@@ -1,3 +1,5 @@
+import "./shared-layout.js";
+
 const footer = document.getElementById("site-footer");
 
 if (footer) {

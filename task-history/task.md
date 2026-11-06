@@ -146,3 +146,10 @@
 - `pages/signup.html`, `js/auth/signup-page.js`, `css/auth.css`: 회원가입 아이디 입력 옆에 중복 확인 버튼을 추가했다. 확인된 아이디를 수정하면 검증을 초기화하고, 확인 완료 전 회원가입을 막는다. 계정 생성 트랜잭션에서도 중복을 다시 검사한다.
 - `firestore.rules`: 아이디 매핑 생성 시 uid와 Firebase Auth 이메일이 일치하도록 규칙을 갱신했다. 새 규칙은 Firebase Console에 다시 게시해야 한다.
 - 기존 `usernames` 문서는 이메일 필드가 없을 수 있어 기존 회원 및 관리자 문서에 `email` 필드를 추가해야 아이디 로그인이 된다. 브라우저/Firebase 실계정 검증은 하지 않았다.
+
+## 최근 작업: 공통 헤더·푸터 모듈화
+
+- `components/site-header.html`, `components/site-overlays.html`, `js/shared-layout.js`를 추가해 데스크톱/모바일 헤더, 퀵 메뉴, 모바일 메뉴, 검색 드로어를 한곳에서 관리하고 각 페이지의 `<main>` 주변에 공통 주입하도록 변경했다.
+- `pages/*.html`, `index.html`에서 중복 헤더/푸터/오버레이 마크업을 제거했다. `js/footer.js`의 `data/footer.json` 기반 렌더링을 공통 레이아웃 초기화와 연결했고, 로그인/회원가입에도 공통 헤더·푸터·메뉴를 적용했다.
+- `js/main.js`, `js/cart.js`, `js/footer.js`, `js/auth/auth-ui.js`, `js/notice/app.js`가 공통 레이아웃 준비 후 DOM을 조회하도록 연결했다. README에 공통 화면 관리 위치를 안내했다.
+- 페이지별 마운트/중복 마크업 여부와 참조 경로를 정적으로 확인했다. 브라우저 화면 및 메뉴 동작은 검증하지 않았다.

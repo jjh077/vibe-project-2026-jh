@@ -1,3 +1,5 @@
+import "./shared-layout.js";
+
 /**
  * 장바구니 공통 모듈
  * - localStorage 에 장바구니 / 마지막 선택 상품을 저장
