@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입 | 그루밍데이</title>
+    <meta name="description" content="그루밍데이 회원가입" />
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/notice.css" />
+    <link rel="stylesheet" href="../css/auth.css" />
+  </head>
+  <body>
+    <header class="outer-box outer-box--header">
+      <div class="inner-box header__inner">
+        <div class="part-box header__desktop">
+          <nav class="part-box header__desktop-menu" aria-label="주요 메뉴">
+            <a href="../index.html#best-products">APPAREL</a>
+            <a href="../index.html#best-products">굿즈</a>
+            <span class="header__menu-label">커뮤니티</span>
+            <a href="notice.html">공지사항</a>
+          </nav>
+          <a class="brand-logo" href="../index.html" aria-label="그루밍데이 홈">그루밍데이</a>
+          <nav class="part-box header__desktop-utilities" aria-label="사용자 메뉴">
+            <div class="site-auth" data-auth-ui data-login-url="login.html"></div>
+          </nav>
+        </div>
+        <div class="header__mobile">
+          <div class="part-box header__mobile-top">
+            <a class="brand-logo" href="../index.html" aria-label="그루밍데이 홈">그루밍데이</a>
+            <a class="site-auth__link" href="notice.html">공지사항</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="notice-page auth-page">
+      <div class="notice-heading">
+        <h1 class="notice-heading__title">MEMBER</h1>
+        <p class="notice-heading__desc">회원 정보를 입력해 주세요.</p>
+      </div>
+
+      <div class="auth-panels">
+        <section class="notice-form-card auth-card" aria-labelledby="signup-title">
+          <div class="form-head">
+            <h2 class="form-title" id="signup-title">회원가입</h2>
+            <p class="form-hint">이름, 아이디, 비밀번호, 이메일을 입력해 주세요.</p>
+          </div>
+          <form class="notice-form" data-signup-form>
+            <div class="form-field">
+              <label class="form-label" for="signup-name">이름</label>
+              <input class="notice-input notice-input--block" id="signup-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="30" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="signup-username">아이디</label>
+              <input class="notice-input notice-input--block" id="signup-username" name="username" type="text" autocomplete="username" minlength="4" maxlength="20" pattern="[A-Za-z0-9_]{4,20}" aria-describedby="username-status" required />
+              <p class="auth-field-hint" id="username-status" data-username-status role="status">영문 소문자, 숫자, 밑줄로 4~20자 입력해 주세요.</p>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="signup-password">비밀번호</label>
+              <input class="notice-input notice-input--block" id="signup-password" name="password" type="password" autocomplete="new-password" minlength="6" required />
+              <p class="auth-field-hint">Firebase 정책에 따라 6자 이상 입력해 주세요.</p>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="signup-email">이메일</label>
+              <input class="notice-input notice-input--block" id="signup-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <p class="auth-message" data-form-message role="status" aria-live="polite"></p>
+            <button class="notice-btn notice-btn--primary auth-submit" type="submit">회원가입</button>
+          </form>
+        </section>
+        <p class="auth-signup-link">이미 계정이 있으신가요? <a href="login.html">로그인</a></p>
+      </div>
+    </main>
+
+    <script type="module" src="../js/auth/auth-ui.js"></script>
+    <script type="module" src="../js/auth/signup-page.js"></script>
+  </body>
+</html>

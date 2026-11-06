@@ -1,6 +1,7 @@
 import { noticeService } from "../noticeService.js";
 import { icons } from "../icons.js";
 import { h, formatDate, hrefs, statusBlock } from "../util.js";
+import { getCurrentProfile } from "../../auth/authService.js";
 
 const CATEGORIES = ["공지", "이벤트"];
 const DEFAULT_AUTHOR = "그루밍데이";
@@ -12,6 +13,25 @@ const CONTENT_MAX = 5000;
  */
 export async function renderFormView(root, { mode, id, ctx, navigate, isStale }) {
   const isEdit = mode === "edit";
+  let profile = null;
+  try {
+    profile = await getCurrentProfile();
+  } catch (error) {
+    console.error("회원 권한 확인 실패", error);
+  }
+  if (isStale()) return;
+  if (profile?.role !== "admin") {
+    root.replaceChildren(
+      h(
+        "div",
+        { class: "notice-status", role: "status" },
+        h("p", { text: "공지사항 작성과 수정은 관리자만 이용할 수 있습니다." }),
+        h("a", { class: "notice-btn notice-btn--primary", href: "login.html" }, "관리자 로그인"),
+        h("a", { class: "notice-btn", href: hrefs.list() }, "목록으로"),
+      ),
+    );
+    return;
+  }
   let existing = null;
 
   if (isEdit) {
@@ -71,7 +91,7 @@ export async function renderFormView(root, { mode, id, ctx, navigate, isStale })
     value: existing?.content ?? "",
   });
 
-  const author = existing?.author ?? DEFAULT_AUTHOR;
+  const author = existing?.author ?? profile.name ?? DEFAULT_AUTHOR;
   const createdDate = existing ? formatDate(existing.createdAt) : formatDate(new Date().toISOString());
 
   const errors = {

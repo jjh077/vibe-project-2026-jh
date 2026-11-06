@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 | 그루밍데이</title>
+    <meta name="description" content="그루밍데이 로그인" />
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/components.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/notice.css" />
+    <link rel="stylesheet" href="../css/auth.css" />
+  </head>
+  <body>
+    <header class="outer-box outer-box--header">
+      <div class="inner-box header__inner">
+        <div class="part-box header__desktop">
+          <nav class="part-box header__desktop-menu" aria-label="주요 메뉴">
+            <a href="../index.html#best-products">APPAREL</a>
+            <a href="../index.html#best-products">굿즈</a>
+            <span class="header__menu-label">커뮤니티</span>
+            <a href="notice.html">공지사항</a>
+          </nav>
+          <a class="brand-logo" href="../index.html" aria-label="그루밍데이 홈">그루밍데이</a>
+          <nav class="part-box header__desktop-utilities" aria-label="사용자 메뉴">
+            <div class="site-auth" data-auth-ui data-login-url="login.html"></div>
+          </nav>
+        </div>
+        <div class="header__mobile">
+          <div class="part-box header__mobile-top">
+            <a class="brand-logo" href="../index.html" aria-label="그루밍데이 홈">그루밍데이</a>
+          <a class="site-auth__link" href="notice.html">공지사항</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="notice-page auth-page">
+      <div class="notice-heading">
+        <h1 class="notice-heading__title">MEMBER</h1>
+        <p class="notice-heading__desc">로그인 정보를 입력해 주세요.</p>
+      </div>
+
+      <div class="auth-panels">
+        <section class="notice-form-card auth-card" aria-labelledby="login-title">
+          <div class="form-head">
+            <h2 class="form-title" id="login-title">로그인</h2>
+          </div>
+          <p class="auth-field-hint">이메일과 비밀번호로 로그인해 주세요. 아이디는 회원가입 시 중복 확인에 사용합니다.</p>
+          <form class="notice-form" data-login-form>
+            <div class="form-field">
+              <label class="form-label" for="login-email">이메일</label>
+              <input class="notice-input notice-input--block" id="login-email" name="email" type="email" autocomplete="username" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="login-password">비밀번호</label>
+              <input class="notice-input notice-input--block" id="login-password" name="password" type="password" autocomplete="current-password" required />
+            </div>
+            <p class="auth-message" data-form-message role="status" aria-live="polite"></p>
+            <button class="notice-btn notice-btn--primary auth-submit" type="submit">로그인</button>
+          </form>
+        </section>
+        <p class="auth-signup-link">아직 회원이 아니신가요? <a href="signup.html">회원가입</a></p>
+      </div>
+    </main>
+
+    <script type="module" src="../js/auth/auth-ui.js"></script>
+    <script type="module" src="../js/auth/login-page.js"></script>
+  </body>
+</html>

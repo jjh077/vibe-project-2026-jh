@@ -99,4 +99,14 @@
   --z-header: 10;
   --z-controls: 5;
   --z-drawer: 1000;
+
+  --auth-control-height: 2.5rem;
+  --auth-control-padding: var(--space-3);
+  --auth-panel-max: 61.25rem;
+  --auth-form-max: 34rem;
+  --auth-welcome-max: 14rem;
+  --auth-panels-gap: var(--space-6);
+  --auth-page-spacing: var(--space-8);
+  --auth-submit-height: 3rem;
+  --auth-message-height: 1.25rem;
 }

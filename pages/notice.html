@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/components.css" />
     <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/auth.css" />
     <link rel="stylesheet" href="../css/notice.css" />
     <link rel="stylesheet" href="../css/shop.css" />
   </head>
@@ -20,7 +21,8 @@
           <nav class="part-box header__desktop-menu" aria-label="주요 메뉴">
             <a href="../index.html#best-products">APPAREL</a>
             <a href="../index.html#best-products">굿즈</a>
-            <a href="notice.html">커뮤니티</a>
+            <span class="header__menu-label">커뮤니티</span>
+            <a href="notice.html">공지사항</a>
           </nav>
 
           <a class="brand-logo" href="../index.html" aria-label="그루밍데이 홈"
@@ -44,6 +46,7 @@
             <button class="icon-button" type="button" aria-label="마이페이지">
               <img src="../images/used/icon_header_mypage_b_512.svg" alt="" />
             </button>
+            <div class="site-auth" data-auth-ui data-login-url="login.html"></div>
             <button
               class="icon-button cart-button"
               type="button"
@@ -127,9 +130,7 @@
             >
               <a href="../index.html#best-products">APPAREL</a>
               <a href="../index.html#best-products">굿즈</a>
-              <a class="header__mobile-extra" href="notice.html" hidden
-                >커뮤니티</a
-              >
+              <span class="header__mobile-extra" hidden>커뮤니티</span>
             </nav>
             <button
               class="icon-button category-toggle"
@@ -209,17 +210,7 @@
             </svg>
           </button>
         </header>
-        <div class="mobile-menu__actions" aria-label="회원 메뉴">
-          <button class="mobile-menu__action" type="button">로그인</button>
-          <button
-            class="mobile-menu__action mobile-menu__action--signup"
-            type="button"
-          >
-            <span class="mobile-menu__point">+1,000P</span>
-            회원가입
-          </button>
-          <button class="mobile-menu__action" type="button">주문조회</button>
-        </div>
+        <div class="mobile-menu__actions site-auth site-auth--mobile" data-auth-ui data-login-url="login.html" aria-label="회원 메뉴"></div>
         <nav class="mobile-menu__navigation" aria-label="모바일 메뉴">
           <a class="mobile-menu__link" href="../index.html#best-products">APPAREL</a>
           <a class="mobile-menu__link" href="../index.html#best-products">굿즈</a>
@@ -626,6 +617,7 @@
     </aside>
     <script type="module" src="../js/footer.js"></script>
     <script type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/auth/auth-ui.js"></script>
     <script type="module" src="../js/notice/app.js"></script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 import { noticeService } from "../noticeService.js";
 import { icons } from "../icons.js";
 import { h, formatDate, formatViews, isNew, hrefs, statusBlock } from "../util.js";
+import { getCurrentProfile } from "../../auth/authService.js";
 
 const TABS = [
   { value: "all", label: "전체보기" },
@@ -41,6 +42,14 @@ export async function renderListView(root, { query, navigate, isStale }) {
   }
   if (isStale()) return;
 
+  let isAdmin = false;
+  try {
+    isAdmin = (await getCurrentProfile())?.role === "admin";
+  } catch (error) {
+    console.error("회원 권한 확인 실패", error);
+  }
+  if (isStale()) return;
+
   state.page = result.page; // 범위를 벗어난 page 보정값 반영
 
   root.replaceChildren(
@@ -49,7 +58,7 @@ export async function renderListView(root, { query, navigate, isStale }) {
       { class: "notice-list", "aria-label": "공지사항 목록" },
       buildToolbar(state, result),
       buildTable(result.items, state),
-      buildFooter(state, result),
+      buildFooter(state, result, isAdmin),
       buildSearch(state, navigate),
     ),
   );
@@ -131,7 +140,7 @@ function buildRow(item) {
 }
 
 /* ---------- 페이지네이션 + 글쓰기 ---------- */
-function buildFooter(state, result) {
+function buildFooter(state, result, isAdmin) {
   const { page, totalPages } = result;
   const first = Math.floor((page - 1) / PAGE_WINDOW) * PAGE_WINDOW + 1;
   const last = Math.min(first + PAGE_WINDOW - 1, totalPages);
@@ -160,7 +169,9 @@ function buildFooter(state, result) {
       pages,
       pageLink(page + 1, icons.chevronRight, { label: "다음 페이지", disabled: page >= totalPages }),
     ),
-    h("a", { class: "notice-btn notice-btn--primary", href: hrefs.write() }, h("span", { html: icons.pen }), "글쓰기"),
+    isAdmin
+      ? h("a", { class: "notice-btn notice-btn--primary", href: hrefs.write() }, h("span", { html: icons.pen }), "글쓰기")
+      : h("span", { class: "notice-footer__spacer", "aria-hidden": "true" }),
   );
 }
 

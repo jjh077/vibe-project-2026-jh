@@ -1,6 +1,7 @@
 import { noticeService } from "../noticeService.js";
 import { icons } from "../icons.js";
 import { h, formatDate, formatViews, formatSize, hrefs, statusBlock } from "../util.js";
+import { getCurrentProfile } from "../../auth/authService.js";
 
 export async function renderDetailView(root, { id, ctx, navigate, isStale }) {
   root.replaceChildren(statusBlock("게시글을 불러오는 중입니다..."));
@@ -36,12 +37,20 @@ export async function renderDetailView(root, { id, ctx, navigate, isStale }) {
     return;
   }
 
+  let isAdmin = false;
+  try {
+    isAdmin = (await getCurrentProfile())?.role === "admin";
+  } catch (error) {
+    console.error("회원 권한 확인 실패", error);
+  }
+  if (isStale()) return;
+
   root.replaceChildren(
     h(
       "article",
       { class: "notice-detail" },
       buildPost(notice),
-      buildActions(notice, navigate),
+      buildActions(notice, navigate, isAdmin),
       buildAdjacent(notice),
     ),
   );
@@ -97,7 +106,7 @@ function buildPost(notice) {
   return h("div", { class: "post-card" }, head, attachment, body);
 }
 
-function buildActions(notice, navigate) {
+function buildActions(notice, navigate, isAdmin) {
   const onDelete = async (event) => {
     if (!window.confirm("이 게시글을 삭제하시겠습니까?\n삭제 후에는 복구할 수 없습니다.")) return;
     const button = event.currentTarget;
@@ -116,12 +125,12 @@ function buildActions(notice, navigate) {
     "div",
     { class: "post-actions" },
     h("a", { class: "notice-btn", href: hrefs.list() }, h("span", { html: icons.list }), "목록으로"),
-    h(
+    isAdmin ? h(
       "div",
       { class: "post-actions__right" },
       h("a", { class: "notice-btn notice-btn--primary", href: hrefs.edit(notice.id) }, h("span", { html: icons.editBox.replace(/width="22" height="22"/, 'width="15" height="15"') }), "수정"),
       h("button", { class: "notice-btn notice-btn--danger", type: "button", onClick: onDelete }, h("span", { html: icons.trash }), "삭제"),
-    ),
+    ) : null,
   );
 }
 
