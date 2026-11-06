@@ -280,16 +280,25 @@
 }
 
 .product-selected__item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  display: grid;
+  gap: 0.75rem;
   padding: 0.75rem 1rem;
   background: #f7f7f7;
   font-size: 0.875rem;
 }
 
+.product-selected__heading,
+.product-selected__details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+}
+
 .product-selected__name { flex: 1 1 auto; min-width: 0; }
-.product-selected__price { min-width: 80px; text-align: right; font-weight: 600; }
+.product-selected__details { justify-content: flex-start; }
+.product-selected__price { margin-left: auto; min-width: 80px; text-align: right; font-weight: 600; }
 
 .product-selected__remove {
   border: 0;

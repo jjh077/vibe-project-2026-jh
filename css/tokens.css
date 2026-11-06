@@ -83,6 +83,7 @@
   --space-focus-offset: 3px;
   --space-category-toggle: 1.75rem;
   --space-menu-icon-gap: 0.625rem;
+  --space-dropdown-width: 8.75rem;
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -94,6 +95,7 @@
   --transition-overlay: 250ms ease;
   --focus-ring: var(--space-focus-outline) solid var(--color-focus);
   --focus-ring-offset: var(--space-focus-offset);
+  --shadow-dropdown: 0 4px 10px var(--color-overlay);
 
   --content-width: 1920px;
   --z-header: 10;

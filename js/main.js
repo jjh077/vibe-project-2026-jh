@@ -1,4 +1,5 @@
 import "./cart.js";
+import "./header-dropdowns.js";
 
 const hero = document.querySelector(".hero");
 const track = document.querySelector(".hero-track");
@@ -311,7 +312,13 @@ languageButtons.forEach((button) => {
     languageButtons.forEach((languageButton) => {
       languageButton.setAttribute(
         "aria-pressed",
-        String(languageButton === button),
+        String(languageButton.dataset.language === button.dataset.language),
+      );
+    });
+    document.querySelectorAll(".header-dropdown__language").forEach((languageButton) => {
+      languageButton.setAttribute(
+        "aria-pressed",
+        String(languageButton.dataset.language === button.dataset.language),
       );
     });
   });

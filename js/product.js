@@ -247,6 +247,9 @@ const render = (product) => {
     }
     optionHint?.classList.remove("is-error");
     selectToggle?.classList.remove("is-error");
+    if (optionHint) optionHint.textContent = `[필수] ${entry.option}`;
+    const selectLabel = selectToggle?.querySelector(".product-select__label");
+    if (selectLabel) selectLabel.textContent = entry.option;
     renderSelected();
   };
 
@@ -348,7 +351,8 @@ const render = (product) => {
 
     select.append(selectToggle, list);
     const dd = el("dd");
-    dd.append(select);
+    optionHint = el("p", "product-option__hint", "[필수] 옵션을 선택해 주세요");
+    dd.append(select, optionHint);
     table.append(el("dt", "", "옵션"), dd);
   }
 
@@ -468,18 +472,41 @@ const render = (product) => {
         formatPrice(item.price * item.qty),
       );
 
-      li.append(name, stepper, price2);
+      const heading = el("div", "product-selected__heading");
+      heading.append(name);
 
-      if (hasOptions) {
+      if (selected.length > 1) {
         const remove = el("button", "product-selected__remove", "×");
         remove.type = "button";
         remove.setAttribute("aria-label", `${item.option} 옵션 삭제`);
         remove.addEventListener("click", () => {
           selected = selected.filter((s) => s !== item);
+          if (optionHint) {
+            optionHint.textContent = selected.length
+              ? `[필수] ${selected[selected.length - 1].option || "옵션"}`
+              : "[필수] 옵션을 선택해 주세요";
+          }
+          if (selectToggle) {
+            selectToggle.querySelector(".product-select__label").textContent =
+              selected.length
+                ? selected[selected.length - 1].option
+                : "- [필수] 옵션을 선택해 주세요 -";
+          }
+          document.querySelectorAll(".product-option__btn").forEach((button) => {
+            button.classList.toggle(
+              "is-selected",
+              selected.some((entry) => entry.option === button.textContent),
+            );
+          });
           renderSelected();
         });
-        li.append(remove);
+        heading.append(remove);
       }
+
+      if (hasOptions) name.textContent = item.option || product.name;
+      const details = el("div", "product-selected__details");
+      details.append(stepper, price2);
+      li.append(heading, details);
       selectedList.append(li);
     });
 
