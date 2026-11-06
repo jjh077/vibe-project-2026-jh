@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // TEMPORARY TEST RULES: anyone can read and modify notices until 2026-12-06.
+    // Replace with authenticated/admin rules before production use.
+    match /notices/{noticeId} {
+      allow read, write: if request.time < timestamp.date(2026, 12, 6);
+    }
+  }
+}

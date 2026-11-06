@@ -11,8 +11,8 @@
  */
 import {
   collection, getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, increment,
-  query, orderBy, getCountFromServer, where,
-} from "firebase/firestore";
+  query, orderBy,
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 import { db } from "./firebaseConfig.js";
 
 const COLLECTION = "notices";

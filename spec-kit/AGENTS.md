@@ -5,7 +5,7 @@
 
 ---
 
-## 🚨 작업 시작 전 필독 (Agent & Developer Notice)
+## 🚨 작업 시작 전 필독 (AGENTS & Developer Notice)
 
 > **모든 작업(코드 작성·수정·리팩토링)을 시작하기 전에 아래 규약 문서를 정독하고 착수합니다.**
 
@@ -82,7 +82,7 @@
 
 ```text
 /
-├─ AGENTS.md               # 본 문서 (프로젝트 안내 + 통합 코딩 규약)
+├─ AGENTS.md                # 본 문서 (프로젝트 안내 + 통합 코딩 규약)
 ├─ index.html              # 메인 진입점
 ├─ pages/                  # 서브 페이지 (kebab-case.html)
 ├─ assets/
